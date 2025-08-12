@@ -17,6 +17,9 @@ const HomePage = ({ app_settings, myloans }) => {
     const router = useRouter();
 
     const handle_options = (link) => {
+        const appId = router.query.app_id;
+        if (!appId) return;
+
         setAPIloading(true);
         setTimeout(() => {
             link && router.push(link)

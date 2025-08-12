@@ -67,6 +67,9 @@ const My_loans = ({ app_settings, myloans }) => {
     const router = useRouter();
 
     const pay_loan = () => {
+        const appId = router.query.app_id;
+        if (!appId) return;
+        
         setAPIloading(true);
         setTimeout(() => {
             setAPIloading(false);

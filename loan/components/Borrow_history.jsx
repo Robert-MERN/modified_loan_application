@@ -10,6 +10,9 @@ import formatter from '@/utils/functions/num_formatter';
 const Loans = ({ loan_settings }) => {
     const router = useRouter();
     const repayment_btn = (loan_id) => {
+        const appId = router.query.app_id;
+        if (!appId) return;
+
         router.push(`/re-payment-tab/${router.query.app_id}/${loan_id}`);
     }
 
@@ -67,6 +70,8 @@ const Borrow_history = ({ app_settings, myloans }) => {
     const router = useRouter();
 
     const pay_loan = () => {
+        const appId = router.query.app_id;
+        if (!appId) return;
         setAPIloading(true);
         setTimeout(() => {
             setAPIloading(false);

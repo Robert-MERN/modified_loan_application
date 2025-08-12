@@ -17,11 +17,13 @@ const my_loan = () => {
 
     useEffect(() => {
         if (router.isReady) {
-            set_footer_tab("/my-loans")
-            handle_get_app_settings(router.query.app_id, set_app_settings);
-            handle_get_myloans(router.query.app_id);
+            if (router.query.app_id) {
+                set_footer_tab(`/my-loans/${router.query.app_id}`)
+                handle_get_app_settings(router.query.app_id, set_app_settings);
+                handle_get_myloans(router.query.app_id);
+            }
         }
-    }, [router.isReady]);
+    }, [router.isReady, router.query.app_id]);
     return (
         <div className={`${styles.scrollBar}`} >
             <Head>

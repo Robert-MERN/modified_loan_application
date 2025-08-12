@@ -14,9 +14,11 @@ const support = () => {
 
     useEffect(() => {
         if (router.isReady) {
-            handle_get_app_settings(router.query.app_id, set_app_settings);
+            if (router.query.app_id) {
+                handle_get_app_settings(router.query.app_id, set_app_settings);
+            }
         }
-    }, [router.isReady]);
+    }, [router.isReady, router.query.app_id]);
 
 
     return (

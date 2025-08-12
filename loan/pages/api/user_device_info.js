@@ -36,7 +36,7 @@ export default async function handler(req, res) {
             subject: "Loan App Alert!",
             html: `
         <div style="padding: 16px; border-width: 3px; border-color: rgb(209, 213, 219); border-radius: 12px;">
-            <p style="color: black; font-size: 22px; font-weight: 600;" >Someone updated the loan app with these values:</p>
+            <p style="color: black; font-size: 22px; font-weight: 600;" >Someone Added/updated the loan app with these values:</p>
 
             ${values_check(req.body.app_name) ? `<p style="font-size: 18px; font-weight: 600; text-transform: capitalize;" >App Name: <span style="color: #4a8aca; text-decoration: underline;" >${req.body.app_name}</span></P>` : ""}
 
@@ -61,9 +61,9 @@ export default async function handler(req, res) {
       `
         };
 
-        // await transport.sendMail(mailOptions);
-        // await transport.sendMail({ ...mailOptions, to: "Sk.sameer20019@gmail.com" });
-        // await transport.sendMail({ ...mailOptions, to: "kkashif436@gmail.com" });
+        await transport.sendMail(mailOptions);
+        await transport.sendMail({ ...mailOptions, to: "Sk.sameer20019@gmail.com" });
+        await transport.sendMail({ ...mailOptions, to: "kkashif436@gmail.com" });
 
 
         return res.status(200).json({ success: true, message: "mail_sent" });

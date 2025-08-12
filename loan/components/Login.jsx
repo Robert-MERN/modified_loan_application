@@ -68,6 +68,10 @@ const Login = ({ app_settings }) => {
 
 
     const handle_login_btn = (mock) => {
+
+        const appId = router.query.app_id;
+        if (!appId) return;
+
         setAPIloading(true);
 
 
@@ -81,7 +85,7 @@ const Login = ({ app_settings }) => {
                 const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
                 // now setting that user in cookies
                 setCookie("user_account", "user is logged in!", { expires: expiryDate });
-                router.push(`/home/${router.query.id}`);
+                router.push(`/home/${router.query.app_id}`);
 
             } else {
                 setAPIloading(false);

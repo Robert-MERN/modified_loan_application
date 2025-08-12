@@ -18,7 +18,6 @@ export default function repayment_tab() {
     const router = useRouter();
     useEffect(() => {
         if (router.isReady) {
-
             handle_get_app_settings(router.query.app_id, set_app_settings);
             handle_get_one_myloan(router.query.loan_id, set_loan)
         }

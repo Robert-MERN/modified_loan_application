@@ -38,6 +38,10 @@ const User = ({ app_settings }) => {
     const router = useRouter();
 
     const handle_options = (link) => {
+        
+        const appId = router.query.app_id;
+        if (!appId) return;
+
         setAPIloading(true);
         setTimeout(() => {
             if (link === "logout") {

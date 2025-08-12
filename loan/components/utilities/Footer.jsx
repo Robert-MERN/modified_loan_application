@@ -13,6 +13,9 @@ const Footer = () => {
   const router = useRouter();
 
   const select_footer_tab = (val) => {
+    const appId = router.query.app_id;
+    if (!appId) return;
+
     setAPIloading(true);
     setTimeout(() => {
       router.push(val);

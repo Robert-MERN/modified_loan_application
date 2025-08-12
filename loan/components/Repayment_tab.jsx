@@ -86,13 +86,19 @@ const Repayment_tab = ({ app_settings }) => {
                         <p className='text-[13px] text-stone-400 font-semibold' >Expire Date</p>
                         <p className='text-[13px] text-stone-700 font-semibold'>{app_settings.repayment_time ? app_settings.repayment_time : "yyyy-mm-dd"}</p>
                     </div>
-                    {!Boolean(app_settings.loan_status) &&
-                        <Link href={`/re-payment/${router.query.app_id}/${router.query.loan_id}`} target="_blank" >
-                            <div className='w-full mt-3' >
-                                <button className='bg-emerald-400 text-[13px] text-white px-[10px] py-[10px] rounded-md font-medium active:opacity-60 transition-all w-full' >Pay Loan</button>
-                            </div>
-                        </Link>
-                    }
+
+                    {router.isReady && router.query.app_id && router.query.loan_id && (
+                        <>
+                            {!Boolean(app_settings.loan_status) &&
+
+                                <Link href={`/re-payment/${router.query.app_id}/${router.query.loan_id}`} target="_blank" >
+                                    <div className='w-full mt-3' >
+                                        <button className='bg-emerald-400 text-[13px] text-white px-[10px] py-[10px] rounded-md font-medium active:opacity-60 transition-all w-full' >Pay Loan</button>
+                                    </div>
+                                </Link>
+                            }
+                        </>
+                    )}
                 </div>
             </div>
         </div >

@@ -13,6 +13,10 @@ const Navbar = ({ back_btn, disable_headset, admin, app_settings }) => {
   const router = useRouter();
 
   const push = (link) => {
+    
+    const appId = router.query.app_id;
+    if (!appId) return;
+
     setAPIloading(true);
     setTimeout(() => {
       if (link) {
@@ -35,7 +39,7 @@ const Navbar = ({ back_btn, disable_headset, admin, app_settings }) => {
             <ArrowBackIosNewIcon onClick={() => push()} className='text-white absolute left-0 top-0 active:opacity-60 transition-all cursor-pointer' />
           }
 
-          <button onClick={() => push(`/home/${router.query.app_id}`)} className='font-bold text-[15px] text-white text-center select-none capitalize' >
+          <button onClick={() => admin ? push("/50001") : push(`/home/${router.query.app_id}`)} className='font-bold text-[15px] text-white text-center select-none capitalize' >
             {admin ? "Admin" : app_settings && app_settings.app_name}
           </button>
 
