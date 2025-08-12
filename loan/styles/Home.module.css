@@ -1,0 +1,100 @@
+@font-face {
+  font-family: "ConcertOne";
+  src: local("ConcertOne"), url("../public/fonts/ConcertOne.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "FragmentMono";
+  src: local("FragmentMono"), url("../public/fonts/FragmentMono.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OleoScript";
+  src: local("OleoScript"), url("../public/fonts/OleoScript.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenSans";
+  src: local("OpenSans"), url("../public/fonts/OpenSans.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PalanquinDark";
+  src: local("PalanquinDark"), url("../public/fonts/PalanquinDark.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins"), url("../public/fonts/Poppins.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RubikBubbles";
+  src: local("RubikBubbles"), url("../public/fonts/RubikBubbles.ttf") format("truetype");
+  font-display: swap;
+}
+
+.logoText {
+  font-family: ConcertOne;
+}
+
+.landingPageHeading {
+  font-family: "Poppins";
+}
+
+.logo1 {
+  font-family: "PalanquinDark";
+}
+
+.tapHighlight {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+
+.scrollBar::-webkit-scrollbar {
+  width: 7px;
+  height: 10px;
+}
+
+
+.scrollBar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+  background: #464e48;
+  border-radius: 12px;
+  transition: all 300ms ease-in-out;
+}
+
+.scrollBar::-webkit-scrollbar-thumb:hover {
+  background: #6CBE45;
+  cursor: pointer;
+}
+
+
+
+@keyframes marqueeAnimation {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+
+    transform: translateX(-100%);
+  }
+}
+
+.text_slider {
+  animation: marqueeAnimation linear infinite 14s;
+}
+
+
