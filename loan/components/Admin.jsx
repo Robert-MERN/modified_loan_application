@@ -235,12 +235,12 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
                                                                         {each.upi_id}
                                                                     </span></p>
                                                                     
-                                                                    {each.total_loan_amount &&
+                                                                    {Boolean(each.total_loan_amount) &&
                                                                         <p>Total Loan Amount: <span className='text-stone-600' >
                                                                         {Number(each.total_loan_amount).toLocaleString("en-US")}
                                                                     </span></p>}
                                                                     
-                                                                    {each.total_paid_amount &&
+                                                                    {Boolean(each.total_paid_amount) &&
                                                                         <p>Total Paid Amount: <span className='text-stone-600' >
                                                                         {Number(each.total_paid_amount).toLocaleString("en-US")}
                                                                     </span></p>}
