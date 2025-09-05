@@ -22,6 +22,20 @@ export default async function handler(req, res) {
         }
 
         const customers = setting.map(each => each.toObject())
+        
+        
+
+        if (customers.length) {
+            await Promise.all(
+                customers.map((customer) => {
+                    const all_loans = await Myloans.find({ customer_id: customer._id });
+                    
+                    if(all_loans.length){
+                    
+                    }
+                })
+            );
+        }
 
         return res.status(200).json(customers);
 
