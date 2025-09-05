@@ -96,29 +96,7 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
     };
     
     
-   const [all_app_settings, set_all_app_settings] = useState(app_settings); // original full list
-const [filtered_settings, set_filtered_settings] = useState(app_settings); // filtered list
-const [search_params, set_search_params] = useState("");
 
-const handle_search = (e) => set_search_params(e.target.value);
-
-useEffect(() => {
-  if (search_params.trim()) {
-    const filtered = all_app_settings.filter((each) => {
-      return (
-        each.user_name?.toLowerCase().includes(search_params.toLowerCase()) ||
-        each.pan_card?.toLowerCase().includes(search_params.toLowerCase()) ||
-        each.app_name?.toLowerCase().includes(search_params.toLowerCase()) ||
-        each._id?.toLowerCase().includes(search_params.toLowerCase()) ||
-        each.upi_id?.toLowerCase().includes(search_params.toLowerCase())
-      );
-    });
-    set_filtered_settings(filtered);
-  } else {
-    set_filtered_settings(all_app_settings);
-  }
-}, [search_params, all_app_settings]);
-    
 
     return (
         <div className='w-screen min-h-screen relative bg-stone-100 flex justify-center' >
@@ -218,18 +196,18 @@ useEffect(() => {
                         <div className='w-full flex flex-col gap-1' >
                             <label className='text-[13px] font-bold text-stone-700 mb-4 flex items_center gap-3 justify-between' htmlFor="">
                                 <span>All users's app & loans</span>
-                                <span>{Boolean(_app_settings.length) && "("+_app_settings.length+")"}</span>
+                                <span>{Boolean(app_settings.length) && "("+app_settings.length+")"}</span>
                             </label>
                             
-                            {Boolean(app_settings.length) &&
+                            {Boolean(false) &&
                                 <div className='w-full flex flex-col gap-1 mt-2 mb-3' >
                               <input
                                 className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
                                 placeholder='Search Loan'
                                 type="search"
                                 name="search"
-                                value={search_params}
-                                onChange={handle_search}
+                                value={""}
+                                onChange={{}}
                               />
                            </div>
                            }
@@ -242,14 +220,14 @@ useEffect(() => {
                                     </div>
                                     :
                                     <>
-                                        {filtered_settings.length ?
+                                        {app_settings.length ?
 
 
 
                                             <div className='w-full flex flex-col gap-4' >
 
                                                 {/* Loan */}
-                                                {filtered_settings.map((each, index) => (
+                                                {app_settings.map((each, index) => (
                                                     < div
                                                         key={index} className='text-[14px] font-medium text-stone-700 bg-stone-50 px-[16px] py-[10px] rounded-md border border-stone-200 shadow-md w-full'
 
