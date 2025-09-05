@@ -234,6 +234,17 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
                                                                     <p>UPI ID: <span className='text-stone-600' >
                                                                         {each.upi_id}
                                                                     </span></p>
+                                                                    
+                                                                    {each.total_loan_amount &&
+                                                                        <p>Total Loan Amount: <span className='text-stone-600' >
+                                                                        {Number(each.total_loan_amount).toLocaleString("en-US")}
+                                                                    </span></p>}
+                                                                    
+                                                                    {each.total_paid_amount &&
+                                                                        <p>Total Paid Amount: <span className='text-stone-600' >
+                                                                        {Number(each.total_paid_amount).toLocaleString("en-US")}
+                                                                    </span></p>}
+                                                                    
                                                                 </Link>
                                                             </div>
 
