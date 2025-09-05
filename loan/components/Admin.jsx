@@ -103,23 +103,22 @@ const handle_search = (e) => set_search_params(e.target.value);
 const [filtered_settings, set_filtered_settings] = useState(app_settings); // filtered list
 
 useEffect(() => {
-  const copy_app_settings = [...app_settings];
-
   if (search_params.trim()) {
-    const filtered = copy_app_settings.filter((each) => {
+    const filtered = app_settings.filter((each) => {
+      const query = search_params.toLowerCase();
       return (
-        each.user_name?.toLowerCase().includes(search_params.toLowerCase()) ||
-        each.pan_card?.toLowerCase().includes(search_params.toLowerCase()) ||
-        each.app_name?.toLowerCase().includes(search_params.toLowerCase()) ||
-        each.upi_id?.toLowerCase().includes(search_params.toLowerCase()) || 
-        each._id?.includes(search_params)
+        each.user_name?.toLowerCase().includes(query) ||
+        each.pan_card?.toLowerCase().includes(query) ||
+        each.app_name?.toLowerCase().includes(query) ||
+        each.upi_id?.toLowerCase().includes(query) ||
+        each._id?.toLowerCase().includes(query)
       );
     });
     set_filtered_settings(filtered);
   } else {
     set_filtered_settings(app_settings);
   }
-}, [search_params]);
+}, [search_params, app_settings]);
     
 
 
