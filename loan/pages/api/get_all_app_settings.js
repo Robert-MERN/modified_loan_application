@@ -1,6 +1,6 @@
 import connectMongo from "@/utils/functions/connectMongo"
 import Settings from "@/models/settingsModel";
-import Customers from "@/models/customersModel";
+import Myloans from "@/models/myloansModel";
 
 /**
  * 
