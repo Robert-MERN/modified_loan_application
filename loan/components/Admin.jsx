@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './utilities/Navbar'
 import useStateContext from '@/context/ContextProvider'
 import { useState } from 'react'
@@ -94,6 +94,33 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
                 });
             });
     };
+    
+    
+    const [_app_settings, set_app_settings] = useState(app_settings);
+    const [search_params, set_search_params] = useState("");
+    
+    const handle_search = (e)=> set_search_params(e.value);
+    
+    useEffect(()=>{
+        if(search_params){
+            const filtered = app_settings.filter((each)=> {
+                return (
+                     each.user_name?.toLowerCase().includes(search_params.toLowerCase())
+                     ||
+                    each.pan_card?.toLowerCase().includes(search_params.toLowerCase())
+                     ||
+                     each.app_name?.toLowerCase().includes(search_params.toLowerCase())
+                     ||
+                     each.upi_id?.toLowerCase().includes(search_params.toLowerCase())
+                )});
+                
+                set_app_settings(filtered);
+    
+        } else {
+            set_app_settings(app_settings);
+        }
+    },[search_params])
+    
 
     return (
         <div className='w-screen min-h-screen relative bg-stone-100 flex justify-center' >
@@ -195,6 +222,18 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
                                 <span>All users's app & loans</span>
                                 <span>{Boolean(app_settings.length) && "("+app_settings.length+")"}</span>
                             </label>
+                            
+                            <div className='w-full flex flex-col gap-1' >
+                            < input
+                                className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                placeholder='Search Loan'
+                                type="search"
+                                name="search"
+                                value={search_params}
+                                onChange={handle_search}
+                            />
+                           </div>
+                            
                             <div>
 
                                 {is_loading ?
