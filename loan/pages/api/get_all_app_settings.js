@@ -27,10 +27,25 @@ export default async function handler(req, res) {
 
         if (customers.length) {
             await Promise.all(
-                customers.map((customer) => {
-                    const all_loans = await Myloans.find({ customer_id: customer._id });
+                customers.map((customer, index) => {
+                    const all_loans = Myloans.find({ customer_id: customer._id });
                     
                     if(all_loans.length){
+                        
+                       const copy_customer = customers[index];
+                        
+                        const total_loan_amount = all_loans.reduce((sum, loan)=> (sum + Number(loan.loan_amount)), 0);
+                        
+                        const total_paid_amount = all_loans.reduce((sum, loan)=> {
+                            if(loan.loan_status) {
+                                return sum + Number(loan.loan_amount);
+                            } else {return sum}
+                        }, 0)
+                        
+                        if (total_loan_amount > 0) copy_customer.total_loan_amount = total_loan_amount;
+                       if (total_paid_amount > 0) copy_customer.total_paid_amount = total_paid_amount;
+                    
+                      customers.splice(index, 1, copy_customer)
                     
                     }
                 })
