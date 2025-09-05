@@ -191,8 +191,9 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
                     <>
 
                         <div className='w-full flex flex-col gap-1' >
-                            <label className='text-[13px] font-bold text-stone-700 mb-4' htmlFor="">
-                                All users's app & loans
+                            <label className='text-[13px] font-bold text-stone-700 mb-4 flex items_center gap-3 justify-between' htmlFor="">
+                                <span>All users's app & loans</span>
+                                <span>{Boolean(app_settings.length) && "("+app_settings.length+")"}</span>
                             </label>
                             <div>
 
