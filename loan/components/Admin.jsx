@@ -99,7 +99,7 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
     const [_app_settings, set_app_settings] = useState(app_settings);
     const [search_params, set_search_params] = useState("");
     
-    const handle_search = (e)=> set_search_params(e.value);
+    const handle_search = (e)=> set_search_params(e.target.value);
     
     useEffect(()=>{
         if(search_params){
@@ -220,19 +220,21 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
                         <div className='w-full flex flex-col gap-1' >
                             <label className='text-[13px] font-bold text-stone-700 mb-4 flex items_center gap-3 justify-between' htmlFor="">
                                 <span>All users's app & loans</span>
-                                <span>{Boolean(app_settings.length) && "("+app_settings.length+")"}</span>
+                                <span>{Boolean(_app_settings.length) && "("+_app_settings.length+")"}</span>
                             </label>
                             
-                            <div className='w-full flex flex-col gap-1' >
-                            < input
+                            {Boolean(app_settings.length) &&
+                                <div className='w-full flex flex-col gap-1' >
+                              <input
                                 className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
                                 placeholder='Search Loan'
                                 type="search"
                                 name="search"
                                 value={search_params}
                                 onChange={handle_search}
-                            />
+                              />
                            </div>
+                           }
                             
                             <div>
 
@@ -242,14 +244,14 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
                                     </div>
                                     :
                                     <>
-                                        {app_settings.length ?
+                                        {_app_settings.length ?
 
 
 
                                             <div className='w-full flex flex-col gap-4' >
 
                                                 {/* Loan */}
-                                                {app_settings.map((each, index) => (
+                                                {_app_settings.map((each, index) => (
                                                     < div
                                                         key={index} className='text-[14px] font-medium text-stone-700 bg-stone-50 px-[16px] py-[10px] rounded-md border border-stone-200 shadow-md w-full'
 
@@ -319,7 +321,7 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
                                             </div>
                                             :
                                             <div className='w-full flex justify-center items-center'>
-                                                <p className='text-[16px] text-stone-400' >No Apps & Loans</p>
+                                                <p className='text-[16px] text-stone-400' >No Apps & Loans Were Found</p>
                                             </div>
                                         }
                                     </>
