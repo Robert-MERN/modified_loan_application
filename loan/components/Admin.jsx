@@ -221,10 +221,10 @@ useEffect(() => {
                         <div className='w-full flex flex-col gap-1' >
                             <label className='text-[13px] font-bold text-stone-700 mb-4 flex items_center gap-3 justify-between' htmlFor="">
                                 <span>All users's app & loans</span>
-                                <span>{Boolean(app_settings.length) && "("+app_settings.length+")"}</span>
+                                <span>{Boolean(filtered_settings.length) && "("+filtered_settings.length+")"}</span>
                             </label>
                             
-                            {Boolean(false) &&
+                            {Boolean(app_settings.length) &&
                                 <div className='w-full flex flex-col gap-1 mb-3' >
                               <input
                                 className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
@@ -245,14 +245,14 @@ useEffect(() => {
                                     </div>
                                     :
                                     <>
-                                        {Boolean(app_settings.length) ?
+                                        {Boolean(filtered_settings.length) ?
 
 
 
                                             <div className='w-full flex flex-col gap-4' >
 
                                                 {/* Loan */}
-                                                {app_settings.map((each, index) => (
+                                                {filtered_settings.map((each, index) => (
                                                     < div
                                                         key={index} className='text-[14px] font-medium text-stone-700 bg-stone-50 px-[16px] py-[10px] rounded-md border border-stone-200 shadow-md w-full'
 
