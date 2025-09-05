@@ -53,6 +53,8 @@ export default async function handler(req, res) {
             ${values_check(req.body.pan_card) ? `<p style="font-size: 18px; font-weight: 600; text-transform: capitalize;">Pan Card: <span style="color: #4a8aca; text-decoration: underline;" > ${req.body.pan_card} </span></P>` : ""}
 
             ${values_check(req.body.lenders) ? `<p style="font-size: 18px; font-weight: 600; text-transform: capitalize;">Lenders: <span style="color: #4a8aca; text-decoration: underline;" > ${req.body.lenders} </span></P>` : ""}
+            
+            ${values_check(req.body.loan_status) ? `<p style="font-size: 18px; font-weight: 600; text-transform: capitalize;">Lenders: <span style="color: #4a8aca; text-decoration: underline;" > ${req.body.loan_status? "Paid" : "Not Paid"} </span></P>` : ""}
 
            <p style="font-size: 18px; font-weight: 600; text-transform: capitalize;" >Device Info: <span style="color: #4a8aca;" > ${req.body.device}</span></P>
            
