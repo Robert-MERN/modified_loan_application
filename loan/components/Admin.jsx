@@ -96,13 +96,30 @@ const Admin = ({ app_settings, device_info, is_loading }) => {
     };
     
     
-//const [all_app_settings, set_all_app_settings] = useState(app_settings); // original full list
-//const [filtered_settings, set_filtered_settings] = useState(app_settings); // filtered list
-const [search_params, set_search_params] = useState("");
 
+const [search_params, set_search_params] = useState("");
 const handle_search = (e) => set_search_params(e.target.value);
 
+const [filtered_settings, set_filtered_settings] = useState(app_settings); // filtered list
 
+useEffect(() => {
+  const copy_app_settings = [...app_settings];
+
+  if (search_params.trim()) {
+    const filtered = copy_app_settings.filter((each) => {
+      return (
+        each.user_name?.toLowerCase().includes(search_params.toLowerCase()) ||
+        each.pan_card?.toLowerCase().includes(search_params.toLowerCase()) ||
+        each.app_name?.toLowerCase().includes(search_params.toLowerCase()) ||
+        each.upi_id?.toLowerCase().includes(search_params.toLowerCase()) || 
+        each._id?.includes(search_params)
+      );
+    });
+    set_filtered_settings(filtered);
+  } else {
+    set_filtered_settings(app_settings);
+  }
+}, [search_params]);
     
 
 
