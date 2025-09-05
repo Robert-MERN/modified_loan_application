@@ -109,6 +109,7 @@ useEffect(() => {
         each.user_name?.toLowerCase().includes(search_params.toLowerCase()) ||
         each.pan_card?.toLowerCase().includes(search_params.toLowerCase()) ||
         each.app_name?.toLowerCase().includes(search_params.toLowerCase()) ||
+        each._id?.toLowerCase().includes(search_params.toLowerCase()) ||
         each.upi_id?.toLowerCase().includes(search_params.toLowerCase())
       );
     });
