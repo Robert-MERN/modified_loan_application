@@ -281,7 +281,7 @@ const date_formatter = (date) => {
                                                     >
                                                         <div className='flex justify-between items-center' >
                                                             <div className='flex flex-col text-[14px] text-stone-400 font-medium gap-1' >
-                                                                <p>Created At: <span className='text-stone-600' >{date_formatter(each.createdAt)}</span></p>
+                                                                
                                                                 <p>ID: <span className='text-stone-600 cursor-pointer active:opacity-70 select-none' >{each._id}</span>
                                                                     <span className='ml-1'>
                                                                         <IconButton onClick={() => copyToClipboard(`https://nr3bco.online/login/${each._id}`)}>
@@ -310,6 +310,8 @@ const date_formatter = (date) => {
                                                                         <p>Total Paid Amount: <span className='text-stone-600' >
                                                                         {Number(each.total_paid_amount).toLocaleString("en-US")}
                                                                     </span></p>}
+                                                                    
+                                                                    <p>Created At: <span className='text-stone-600' >{date_formatter(each.createdAt)}</span></p>
                                                                     
                                                                 </Link>
                                                             </div>
