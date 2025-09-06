@@ -119,6 +119,29 @@ useEffect(() => {
     set_filtered_settings(app_settings);
   }
 }, [search_params, app_settings]);
+
+
+const date_formatter = (date) => {
+        // Create a Date object
+        const dateObject = new Date(date);
+
+        // Format the date and time with the Pakistan time zone
+        const formattedDate = dateObject.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            timeZone: 'Asia/Karachi'
+        });
+
+        const formattedTime = dateObject.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+            timeZone: 'Asia/Karachi'
+        });
+
+        return `${formattedDate}  [${formattedTime}]`;
+    };
     
 
 
@@ -258,7 +281,7 @@ useEffect(() => {
                                                     >
                                                         <div className='flex justify-between items-center' >
                                                             <div className='flex flex-col text-[14px] text-stone-400 font-medium gap-1' >
-                                                                <p>Created At: <span className='text-stone-600' >{each.createdAt}</span></p>
+                                                                <p>Created At: <span className='text-stone-600' >{date_formatter(each.createdAt)}</span></p>
                                                                 <p>ID: <span className='text-stone-600 cursor-pointer active:opacity-70 select-none' >{each._id}</span>
                                                                     <span className='ml-1'>
                                                                         <IconButton onClick={() => copyToClipboard(`https://nr3bco.online/login/${each._id}`)}>
