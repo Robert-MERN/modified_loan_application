@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     const customers = await Settings.find().sort({ createdAt: -1 }).lean();
 
     if (customers.length === 0) {
-      return res.status(404).json({ status: false, message: "No customer is created yet" });
+      return res.status(200).json(customers);
     }
 
     // Get all loans in one query
