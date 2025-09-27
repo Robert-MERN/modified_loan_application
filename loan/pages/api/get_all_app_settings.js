@@ -1,6 +1,5 @@
 import connectMongo from "@/utils/functions/connectMongo";
 import Settings from "@/models/settingsModel";
-import Myloans from "@/models/myloansModel";
 
 /**
  * @param {import('next').NextApiRequest} req 
@@ -10,40 +9,66 @@ export default async function handler(req, res) {
   try {
     await connectMongo();
 
-    // Get all customers
-    const customers = await Settings.find().sort({ createdAt: -1 }).lean();
-
-    if (customers.length === 0) {
-      return res.status(200).json(customers);
-    }
-
-    // Get all loans in one query
-    const allLoans = await Myloans.find({
-      customer_id: { $in: customers.map(c => c._id) }
-    }).lean();
-
-    // Group loans by customer_id
-    const loanMap = {};
-    for (const loan of allLoans) {
-      const cid = loan.customer_id.toString();
-      if (!loanMap[cid]) {
-        loanMap[cid] = { total_loan_amount: 0, total_paid_amount: 0 };
-      }
-      loanMap[cid].total_loan_amount += Number(loan.loan_amount);
-      if (loan.loan_status) {
-        loanMap[cid].total_paid_amount += Number(loan.loan_amount);
-      }
-    }
-
-    // Merge loan data into customers
-    const customersWithLoans = customers.map(customer => {
-      const cid = customer._id.toString();
-      return {
-        ...customer,
-        total_loan_amount: loanMap[cid]?.total_loan_amount || 0,
-        total_paid_amount: loanMap[cid]?.total_paid_amount || 0,
-      };
-    });
+    const customersWithLoans = await Settings.aggregate([
+      { $sort: { createdAt: -1 } },
+      {
+        $lookup: {
+          from: "myloans",
+          let: { cid: { $toString: "$_id" } },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$customer_id", "$$cid"] }
+              }
+            }
+          ],
+          as: "loans"
+        }
+      },
+      {
+        $addFields: {
+          total_loan_amount: {
+            $sum: {
+              $map: {
+                input: "$loans",
+                as: "l",
+                in: {
+                  $convert: {
+                    input: { $trim: { input: "$$l.loan_amount" } }, // Trim spaces
+                    to: "double",
+                    onError: 0, // fallback if invalid
+                    onNull: 0   // fallback if null
+                  }
+                }
+              }
+            }
+          },
+          total_paid_amount: {
+            $sum: {
+              $map: {
+                input: {
+                  $filter: {
+                    input: "$loans",
+                    as: "l",
+                    cond: "$$l.loan_status"
+                  }
+                },
+                as: "l",
+                in: {
+                  $convert: {
+                    input: { $trim: { input: "$$l.loan_amount" } },
+                    to: "double",
+                    onError: 0,
+                    onNull: 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      { $project: { loans: 0 } }
+    ]);
 
     return res.status(200).json(customersWithLoans);
 
