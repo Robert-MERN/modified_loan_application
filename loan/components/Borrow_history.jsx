@@ -10,9 +10,6 @@ import formatter from '@/utils/functions/num_formatter';
 const Loans = ({ loan_settings }) => {
     const router = useRouter();
     const repayment_btn = (loan_id) => {
-        const appId = router.query.app_id;
-        if (!appId) return;
-
         router.push(`/re-payment-tab/${router.query.app_id}/${loan_id}`);
     }
 
@@ -23,9 +20,9 @@ const Loans = ({ loan_settings }) => {
                 <p className='text-[14px] text-stone-900  font-bold' >Order Status</p>
                 <p className='text-[14px] text-emerald-400 font-bold'>
                     {Boolean(loan_settings.loan_status) ?
-                        "Paid off"
+                        "Completed"
                         :
-                        "Pending"
+                        "Active"
                     }
                 </p>
 
@@ -38,6 +35,16 @@ const Loans = ({ loan_settings }) => {
                 <p className='text-[13px] text-stone-400 font-semibold' >Loan Amount</p>
                 <p className='text-[13px] text-stone-700 font-semibold'>
                     ₹ {loan_settings ? formatter(loan_settings.loan_amount) + ".00" : "00.00"}</p>
+            </div>
+            <div className='w-full flex justify-between items-center' >
+                <p className='text-[13px] text-stone-400 font-semibold' >Repayment Status</p>
+                <p className='text-[13px] text-stone-700 font-semibold'>
+                    {Boolean(loan_settings.loan_status) ?
+                        "Paid off"
+                        :
+                        "Unpaid"
+                    }
+                </p>
             </div>
             <div className='w-full flex justify-between items-center' >
                 <p className='text-[13px] text-stone-400 font-semibold' >Repayment Time</p>
