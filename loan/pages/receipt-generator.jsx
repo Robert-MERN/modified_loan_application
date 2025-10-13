@@ -1,5 +1,13 @@
 import Receipt_generator from '@/components/Receipt_generator'
 import React from 'react'
+import requestIp from 'request-ip';
+import UAParser from 'ua-parser-js';
+import { get_cookie } from '@/utils/functions/cookie';
+import jwt from "jsonwebtoken";
+import Users from '@/models/user_model';
+import connectMongo from '@/utils/functions/connectMongo';
+
+
 
 
 
