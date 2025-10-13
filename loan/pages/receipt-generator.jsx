@@ -21,7 +21,7 @@ function cleanObject(obj) {
 const receipt_generator = ({userAgent}) => {
     return (
         <main className="min-h-screen flex items-center justify-center bg-gray-50">
-            <Receipt_generator />
+            <Receipt_generator device_info={userAgent} />
         </main>
     )
 }
