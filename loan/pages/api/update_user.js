@@ -1,5 +1,5 @@
 import Users from '@/models/user_model';
-import connect_mongo from '@/utils/functions/connect_mongo';
+import connect_mongo from '@/utils/functions/connectMongo';
 import cryptojs from "crypto-js";
 
 /**
