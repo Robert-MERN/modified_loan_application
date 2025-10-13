@@ -1,6 +1,8 @@
 import Receipt_generator from '@/components/Receipt_generator'
 import React from 'react'
 
+
+
 function cleanObject(obj) {
     const cleanedObj = {};
     for (const key in obj) {
