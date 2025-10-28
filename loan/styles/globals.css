@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family:  -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+body::-webkit-scrollbar {
+  width: 7px;
+  height: 10px;
+}
+
+
+body::-webkit-scrollbar-track {
+  background-color: rgb(245 245 244);
+  transition: all 250ms;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #464e48;
+  border-radius: 12px;
+  transition: all 300ms ease-in-out;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #6f7470;
+  cursor: pointer;
+  transition: all 250ms;
+}
+
+@font-face {
+  font-family: "OpenSans";
+  src: local("OpenSans"), url("../public/fonts/OpenSans.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Graphie";
+  src: local("Graphie"), url("../public/fonts/Graphie.otf") format("opentype");
+  font-display: swap;
+}
+
