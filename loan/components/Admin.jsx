@@ -185,7 +185,7 @@ const Admin = ({ app_settings, app_settings_db_details, device_info, is_loading,
                     <button
                         type='button'
                         onClick={() => set_customize("all_users")}
-                        className={`w-full active:opacity-60 py-[9px] rounded-s-md border-r border-gray-300 text-[12px] md:text-[15px] transition-all font-semibold ${customize === "all_users" ? "bg-emerald-500 hover:bg-emerald-400 text-white" : "bg-stone-400 hover:bg-stone-500 text-white"}`}
+                        className={`w-full active:opacity-60 py-[9px] rounded-s-md border-r border-gray-300 text-[12px] md:text-[15px] transition-all font-semibold ${customize === "all_users" ? "bg-blue-500 hover:bg-blue-400 text-white" : "bg-stone-400 hover:bg-stone-500 text-white"}`}
                     >
                         All Customers
                     </button>
@@ -194,7 +194,7 @@ const Admin = ({ app_settings, app_settings_db_details, device_info, is_loading,
                     <button
                         type="button"
                         onClick={() => set_customize("add_user")}
-                        className={`w-full active:opacity-60 py-[9px] rounded-e-md text-[12px] md:text-[15px] transition-all font-semibold ${customize === "add_user" ? "bg-emerald-500 hover:bg-emerald-400 text-white" : "bg-stone-400 hover:bg-stone-500 text-white"}`}
+                        className={`w-full active:opacity-60 py-[9px] rounded-e-md text-[12px] md:text-[15px] transition-all font-semibold ${customize === "add_user" ? "bg-blue-500 hover:bg-blue-400 text-white" : "bg-stone-400 hover:bg-stone-500 text-white"}`}
                     >
                         Add Customer
                     </button>
@@ -372,7 +372,7 @@ const Admin = ({ app_settings, app_settings_db_details, device_info, is_loading,
                                                                     :
 
                                                                     <button
-                                                                        className='bg-teal-500 text-white rounded py-[6px] px-2 text-[12px] my-2 hover:bg-teal-400 active:opacity-70 transition-all w-[130px]'
+                                                                        className='bg-violet-500 text-white rounded py-[6px] px-2 text-[12px] my-2 hover:bg-violet-400 active:opacity-70 transition-all w-[130px]'
                                                                         type='button'
                                                                         onClick={() => handle_shorten_URL(each._id, `https://nr3bco.online/login/${each._id}`, set_short_link_loading, set_all_app_settings)}
                                                                     >
@@ -446,7 +446,7 @@ const Admin = ({ app_settings, app_settings_db_details, device_info, is_loading,
 
                 {customize === "add_user" &&
                     <div className='w-full mt-'>
-                        <button type='button' onClick={() => handle_add_customer("app", values)} className='bg-emerald-400 text-[13px] text-white px-[10px] py-[10px] rounded-lg font-medium active:opacity-60 transition-all w-full' >Add New Customer</button>
+                        <button type='button' onClick={() => handle_add_customer("app", values)} className='bg-blue-500 text-[13px] text-white px-[10px] py-[10px] rounded-lg font-medium active:opacity-60 transition-all w-full' >Add New Customer</button>
                     </div>
                 }
 

@@ -77,7 +77,7 @@ export default function Receipt_generator() {
                                 <img src="/images/icon_logo.png" className="w-full h-full object-contain" />
                             </div>
                             <div className='pb-[17px]'>
-                                <p className="leading-none">{form.appName}</p>
+                                <p className="leading-none capitalize">{form.appName}</p>
                             </div>
                         </div>
 

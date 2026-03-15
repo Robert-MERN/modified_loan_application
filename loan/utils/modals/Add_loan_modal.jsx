@@ -3,6 +3,8 @@ import Dialog from '@mui/material/Dialog';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 import useStateContext from '@/context/ContextProvider';
+import crypto from "crypto";
+
 
 
 const Add_loan_modal = ({ open, close }) => {
@@ -10,8 +12,23 @@ const Add_loan_modal = ({ open, close }) => {
     const { handle_add_myloan, app_id } = useStateContext();
     const [value, set_value] = useState("");
 
+    function generateSerial() {
+        const now = new Date();
+
+        const date =
+            now.getFullYear() +
+            String(now.getMonth() + 1).padStart(2, "0") +
+            String(now.getDate()).padStart(2, "0") +
+            String(now.getHours()).padStart(2, "0") +
+            String(now.getMinutes()).padStart(2, "0");
+
+        const random = crypto.randomBytes(3).toString("base64").replace(/[^a-zA-Z0-9]/g, "").slice(0, 5);
+
+        return `S${date}${random}`;
+    }
+
     const handle_add = () => {
-        handle_add_myloan({ loan_name: value, customer_id: app_id }, close, set_value);
+        handle_add_myloan({ loan_name: value, customer_id: app_id, receipt_serial_number: generateSerial() }, close, set_value);
     };
 
 

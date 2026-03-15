@@ -29,7 +29,7 @@ const Repayment_link_modal = ({ open, close }) => {
                     <button onClick={close} className='text-[12px] md:text-[15px] text-stone-600 px-4 py-[6px] rounded-md hover:bg-stone-300 transition-all' >Cancel</button>
 
                     <Link href="/re-payment" target='__blank' >
-                        <button onClick={handle_unblock} className='bg-emerald-400 hover:opacity[.8] px-4 py-[6px] rounded-md text-white text-[12px] md:text-[15px] transition-all' >Repayment Link</button>
+                        <button onClick={handle_unblock} className='bg-blue-500 hover:opacity[.8] px-4 py-[6px] rounded-md text-white text-[12px] md:text-[15px] transition-all' >Repayment Link</button>
                     </Link>
                 </div>
             </div>

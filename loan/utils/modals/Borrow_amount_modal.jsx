@@ -53,7 +53,7 @@ const Borrow_amount_modal = ({ open, close }) => {
 
                             <div className="flex flex-col w-full gap-4">
                                 {amounts.map((amount, i) => (
-                                    < button key={i} onClick={() => handle_select_amount(amount)} className={`py-[10px] text-[12px] md:text-[14px] hover:bg-emerald-400 hover:text-white w-full rounded-md select-none flex gap-3 px-4 items-center text-center justify-center font-bold ${borrow_amount === amount ? "bg-emerald-400 text-white" : "bg-stone-300 text-stone-600"}`} >
+                                    < button key={i} onClick={() => handle_select_amount(amount)} className={`py-[10px] text-[12px] md:text-[14px] hover:bg-blue-500 hover:text-white w-full rounded-md select-none flex gap-3 px-4 items-center text-center justify-center font-bold ${borrow_amount === amount ? "bg-blue-500 text-white" : "bg-stone-300 text-stone-600"}`} >
                                         ₹ {amount}
                                     </button>
                                 ))

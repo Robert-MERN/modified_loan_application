@@ -20,7 +20,7 @@ const Loans = ({ loan_settings }) => {
 
             <div className='w-full flex justify-between items-center mb-3' >
                 <p className='text-[14px] text-stone-900  font-bold' >Order Status</p>
-                <p className='text-[14px] text-emerald-400 font-bold'>
+                <p className='text-[14px] text-blue-500 font-bold'>
                     {Boolean(loan_settings.loan_status) ?
                         "Completed"
                         :
@@ -54,7 +54,7 @@ const Loans = ({ loan_settings }) => {
             </div>
             {!Boolean(loan_settings.loan_status) &&
                 <div className='w-full flex justify-end items-center mt-3' >
-                    <button onClick={() => repayment_btn(loan_settings._id)} className='bg-emerald-400 text-[12px] text-white px-[10px] py-[8px] rounded-lg font-medium active:opacity-60 transition-all' >Repayment Now</button>
+                    <button onClick={() => repayment_btn(loan_settings._id)} className='bg-blue-500 text-[12px] text-white px-[10px] py-[8px] rounded-lg font-medium active:opacity-60 transition-all' >Repayment Now</button>
                 </div>
             }
         </div>
@@ -92,7 +92,7 @@ const My_loans = ({ app_settings, myloans }) => {
     return (
         <div className={`w-screen min-h-screen relative bg-stone-10 ${styles.scrollBar}`} >
             <Navbar app_settings={app_settings} back_btn={false} />
-            <div className='w-screen overflow-x-auto flex bg-emerald-400 mt-[52px] px-[15px] pb-[5px] h-[34px] gap-8' >
+            <div className='w-screen overflow-x-auto flex bg-blue-500 mt-[52px] px-[15px] pb-[5px] h-[34px] gap-8' >
                 <p onClick={() => handle_select("paid_off")} className={`text-stone-50 text-[13px] select-none relative w-[70px] text-center whitespace-nowrap ${select === "paid_off" ? "font-semibold " : "font-normal opacity-90"}`} >
                     Paid off
                     {select === "paid_off" &&
@@ -154,7 +154,7 @@ const My_loans = ({ app_settings, myloans }) => {
                                 <Image src={no_result} href="No Result" className='w-[160px] object-contain' />
                             </div>
                             <div onClick={pay_loan} className='w-full px-[20px] mt-4' >
-                                <button className='w-full text-white active:opacity-75 transition-all py-[8px] text-[16px] bg-emerald-400 rounded-full font-medium'>
+                                <button className='w-full text-white active:opacity-75 transition-all py-[8px] text-[16px] bg-blue-500 rounded-full font-medium'>
                                     Borrow now
                                 </button>
                             </div>
@@ -176,7 +176,7 @@ const My_loans = ({ app_settings, myloans }) => {
                                     <Image src={no_result} href="No Result" className='w-[160px] object-contain' />
                                 </div>
                                 <div onClick={pay_loan} className='w-full px-[20px] mt-4' >
-                                    <button className='w-full text-white active:opacity-75 transition-all py-[8px] text-[16px] bg-emerald-400 rounded-full font-medium'>
+                                    <button className='w-full text-white active:opacity-75 transition-all py-[8px] text-[16px] bg-blue-500 rounded-full font-medium'>
                                         Borrow now
                                     </button>
                                 </div>
@@ -189,7 +189,7 @@ const My_loans = ({ app_settings, myloans }) => {
                             <Image src={no_result} href="No Result" className='w-[160px] object-contain' />
                         </div>
                         <div onClick={pay_loan} className='w-full px-[20px] mt-4' >
-                            <button className='w-full text-white active:opacity-75 transition-all py-[8px] text-[16px] bg-emerald-400 rounded-full font-medium'>
+                            <button className='w-full text-white active:opacity-75 transition-all py-[8px] text-[16px] bg-blue-500 rounded-full font-medium'>
                                 Borrow now
                             </button>
                         </div>

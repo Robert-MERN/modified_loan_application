@@ -4,16 +4,17 @@ import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useRouter } from 'next/router';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { FaUser } from "react-icons/fa";
 
 
 
 
-const Navbar = ({ back_btn, disable_headset, admin, app_settings }) => {
+const Navbar = ({ user, back_btn, disable_headset, admin, app_settings }) => {
   const { openModal, show_navbar_BG, setAPIloading } = useStateContext();
   const router = useRouter();
 
   const push = (link) => {
-    
+
     const appId = router.query.app_id;
     if (!appId) return;
 
@@ -31,9 +32,19 @@ const Navbar = ({ back_btn, disable_headset, admin, app_settings }) => {
 
 
   return (
-    <div className='fixed left-0 top-0 right-0 bg-emerald-400 z-50' >
+    <div className='fixed left-0 top-0 right-0 bg-blue-500 z-50' >
       <div className={`p-[15px] w-screen h-[52px]`} >
         <nav className='w-full flex justify-center items-center relative' >
+
+
+
+          {user &&
+            <div onClick={() => push(`/user/${router.query.app_id}`)} >
+              <div className='bg-blue-100 rounded-full p-2 absolute left-0 top-0'>
+                <FaUser className='text-blue-400 active:opacity-60 transition-all cursor-pointer' />
+              </div>
+            </div>
+          }
 
           {back_btn &&
             <ArrowBackIosNewIcon onClick={() => push()} className='text-white absolute left-0 top-0 active:opacity-60 transition-all cursor-pointer' />

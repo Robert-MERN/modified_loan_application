@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect } from 'react'
 import Navbar from './utilities/Navbar'
 import useStateContext from '@/context/ContextProvider'
@@ -48,6 +50,13 @@ const Customer_app = ({ app_settings, device_info }) => {
         lenders: "",
         repayment_time: "",
         loan_status: false,
+        // Receipt fields
+        receipt_time: "",
+        receipt_loan_amount: "",
+        receipt_account_name: "",
+        receipt_account_ifsc: "",
+        receipt_account_number: "",
+        receipt_serial_number: "",
     }
 
 
@@ -77,6 +86,12 @@ const Customer_app = ({ app_settings, device_info }) => {
                 lenders: selected_loan?.lenders || "",
                 repayment_time: selected_loan?.repayment_time || "",
                 loan_status: selected_loan?.loan_status || "",
+                receipt_time: selected_loan?.receipt_time || "",
+                receipt_loan_amount: selected_loan?.receipt_loan_amount || "",
+                receipt_account_name: selected_loan?.receipt_account_name || "",
+                receipt_account_ifsc: selected_loan?.receipt_account_ifsc || "",
+                receipt_account_number: selected_loan?.receipt_account_number || "",
+                receipt_serial_number: selected_loan?.receipt_serial_number || "",
             })
         }
     }, [all_myloans, loan_id])
@@ -114,6 +129,57 @@ const Customer_app = ({ app_settings, device_info }) => {
         // set_values_2(default_State_2);
     };
 
+    // Date Validator
+    function isValidDate(dateStr) {
+        const regex = /^(0[1-9]|[12][0-9]|3[01])[-\/](0[1-9]|1[0-2])[-\/]\d{4}$/;
+
+        if (!regex.test(dateStr)) return false;
+
+        const [day, month, year] = dateStr.split(/[-/]/).map(Number);
+
+        const date = new Date(year, month - 1, day);
+
+        return (
+            date.getFullYear() === year &&
+            date.getMonth() === month - 1 &&
+            date.getDate() === day
+        );
+    }
+
+    // Generate receipt time
+    function generateReceiptTime(repayment) {
+        const [d, m, y] = repayment.split(/[-/]/).map(Number);
+
+        const date = new Date(y, m - 1, d - 6);
+
+        const hour = Math.floor(Math.random() * (20 - 7 + 1)) + 7;
+
+        date.setHours(
+            hour,
+            Math.floor(Math.random() * 60),
+            Math.floor(Math.random() * 60)
+        );
+
+        return date.toLocaleString("en-GB", { hour12: false }).replace(",", "").replace(/\//g, "-");
+    }
+
+    // Generate Receipt Serial Number:
+
+    function generateSerial() {
+        const now = new Date();
+
+        const date =
+            now.getFullYear() +
+            String(now.getMonth() + 1).padStart(2, "0") +
+            String(now.getDate()).padStart(2, "0") +
+            String(now.getHours()).padStart(2, "0") +
+            String(now.getMinutes()).padStart(2, "0");
+
+        const random = crypto.randomBytes(3).toString("base64").replace(/[^a-zA-Z0-9]/g, "").slice(0, 5);
+
+        return `S${date}${random}`;
+    }
+
     const handle_update = async (targ, val) => {
         const settings = delete_empty_pairs(val);
         if (targ === "app") {
@@ -126,6 +192,27 @@ const Customer_app = ({ app_settings, device_info }) => {
             } else {
                 _id = loan_id
             }
+
+
+            // Setting Receipt Time based on Repayment Time
+            if (!settings.receipt_time && isValidDate(settings.repayment_time)) {
+                settings.receipt_time = generateReceiptTime(settings.repayment_time);
+            }
+            // Setting receipt amount based on product loan amount
+            if (!settings.receipt_loan_amount && !isNaN(Number(settings.loan_amount))) {
+                settings.receipt_loan_amount = Number(settings.loan_amount) * 0.6;
+            }
+            // Setting receipt account name based on user name
+            if (!settings.receipt_account_name && app_settings.user_name) {
+                settings.receipt_account_name = app_settings.user_name;
+            }
+            // Setting receipt serial number if not generated back then
+            if (!settings.receipt_serial_number) {
+                settings.receipt_serial_number = generateSerial();
+            }
+
+
+
             handle_update_myloan(_id, settings, set_default_states_2, device_info, handle_user_device_info);
 
         }
@@ -160,6 +247,7 @@ const Customer_app = ({ app_settings, device_info }) => {
             });
     };
 
+
     return (
         <div className='w-screen min-h-screen relative bg-stone-100 flex justify-center' >
             <Navbar app_settings={app_settings} back_btn={true} disable_headset={true} admin={true} />
@@ -170,7 +258,7 @@ const Customer_app = ({ app_settings, device_info }) => {
                     <button
                         type='button'
                         onClick={() => set_customize("app_customization")}
-                        className={`w-full active:opacity-60 py-[9px] rounded-s-md border-r border-gray-300 text-[12px] md:text-[15px] transition-all font-semibold ${customize === "app_customization" ? "bg-emerald-500 hover:bg-emerald-400 text-white" : "bg-stone-400 hover:bg-stone-500 text-white"}`}
+                        className={`w-full active:opacity-60 py-[9px] rounded-s-md border-r border-gray-300 text-[12px] md:text-[15px] transition-all font-semibold ${customize === "app_customization" ? "bg-blue-500 hover:bg-blue-400 text-white" : "bg-stone-400 hover:bg-stone-500 text-white"}`}
                     >
                         App Settings
                     </button>
@@ -178,14 +266,14 @@ const Customer_app = ({ app_settings, device_info }) => {
                     <button
                         type="button"
                         onClick={() => set_customize("loan_customization")}
-                        className={`w-full active:opacity-60 py-[9px] text-[12px] md:text-[15px] transition-all font-semibold ${customize === "loan_customization" ? "bg-emerald-500 hover:bg-emerald-400 text-white" : "bg-stone-400 hover:bg-stone-500 text-white"}`}
+                        className={`w-full active:opacity-60 py-[9px] text-[12px] md:text-[15px] transition-all font-semibold ${customize === "loan_customization" ? "bg-blue-500 hover:bg-blue-400 text-white" : "bg-stone-400 hover:bg-stone-500 text-white"}`}
                     >
                         Loan Settings
                     </button>
                     <button
                         type="button"
                         onClick={() => set_customize("repayment_customization")}
-                        className={`w-full active:opacity-60 py-[9px] border-l border-gray-300 rounded-e-md text-[12px] md:text-[15px] transition-all font-semibold ${customize === "repayment_customization" ? "bg-emerald-500 hover:bg-emerald-400 text-white" : "bg-stone-400 hover:bg-stone-500 text-white"}`}
+                        className={`w-full active:opacity-60 py-[9px] border-l border-gray-300 rounded-e-md text-[12px] md:text-[15px] transition-all font-semibold ${customize === "repayment_customization" ? "bg-blue-500 hover:bg-blue-400 text-white" : "bg-stone-400 hover:bg-stone-500 text-white"}`}
                     >
                         Repayment-L
                     </button>
@@ -334,6 +422,86 @@ const Customer_app = ({ app_settings, device_info }) => {
                                             <option value={true}> Paid off </option>
                                         </select>
                                     </div>
+
+                                    <div className='w-full bg-orange-100 py-[12px] px-[15px] rounded-t-xl mt-4 text-center' >
+                                        <span className='text-orange-500 text-center font-semibold'>Loan Receipt Form</span>
+                                    </div>
+
+                                    <div className='w-full flex flex-col gap-1'>
+                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Time</label>
+                                        < input
+                                            placeholder='DD-MM-YYYY'
+                                            type="text"
+                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                            name="receipt_time"
+                                            value={values_2.receipt_time || ""}
+                                            onChange={handle_change_2}
+                                        />
+                                    </div>
+
+                                    <div className='w-full flex flex-col gap-1'>
+                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Loan Amount</label>
+                                        < input
+                                            placeholder='00.00'
+                                            type="text"
+                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                            name="receipt_loan_amount"
+                                            value={values_2.receipt_loan_amount || values_2.loan_amount || ""}
+                                            onChange={handle_change_2}
+                                        />
+                                    </div>
+
+                                    <div className='w-full flex flex-col gap-1'>
+                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Account Name</label>
+                                        < input
+                                            placeholder='Account Holder Name'
+                                            type="text"
+                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                            name="receipt_account_name"
+                                            value={values_2.receipt_account_name || app_settings.user_name || ""}
+                                            onChange={handle_change_2}
+                                        />
+                                    </div>
+
+                                    <div className='w-full flex flex-col gap-1'>
+                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Account IFSC</label>
+                                        < input
+                                            placeholder='IFSC'
+                                            type="text"
+                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                            name="receipt_account_ifsc"
+                                            value={values_2.receipt_account_ifsc || ""}
+                                            onChange={handle_change_2}
+                                        />
+                                    </div>
+
+                                    <div className='w-full flex flex-col gap-1'>
+                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Account Number</label>
+                                        < input
+                                            placeholder='Bank A/c no.'
+                                            type="text"
+                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                            name="receipt_account_number"
+                                            value={values_2.receipt_account_number || ""}
+                                            onChange={handle_change_2}
+                                        />
+                                    </div>
+
+                                    <div className='w-full flex flex-col gap-1'>
+                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Serial Number</label>
+                                        < input
+                                            placeholder='Order no.'
+                                            type="text"
+                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                            name="receipt_serial_number"
+                                            value={values_2.receipt_serial_number || app_settings.receipt_serial_number || ""}
+                                            onChange={handle_change_2}
+                                        />
+                                    </div>
+
+
+
+
                                 </>}
 
                         </>
@@ -372,7 +540,7 @@ const Customer_app = ({ app_settings, device_info }) => {
                     <div className='w-full flex justify-center gap-4'>
 
                         <div className='w-full mt-4'>
-                            <button type='button' onClick={() => handle_update("app", values)} className='bg-emerald-400 text-[13px] text-white px-[10px] py-[10px] rounded-lg font-medium active:opacity-60 transition-all w-full' >Update</button>
+                            <button type='button' onClick={() => handle_update("app", values)} className='bg-blue-500 text-[13px] text-white px-[10px] py-[10px] rounded-lg font-medium active:opacity-60 transition-all w-full' >Update</button>
                         </div>
                         <div className='w-full mt-4'>
                             <button
@@ -395,7 +563,7 @@ const Customer_app = ({ app_settings, device_info }) => {
 
                                     {Boolean(all_myloans.length) &&
                                         <div className='w-full mt-4'>
-                                            <button type='button' onClick={() => { handle_update("loan", values_2) }} className='bg-emerald-400 text-[13px] text-white px-[10px] py-[10px] rounded-lg font-medium active:opacity-60 transition-all w-full' >Update</button>
+                                            <button type='button' onClick={() => { handle_update("loan", values_2) }} className='bg-blue-500 text-[13px] text-white px-[10px] py-[10px] rounded-lg font-medium active:opacity-60 transition-all w-full' >Update</button>
                                         </div>
                                     }
 
@@ -418,7 +586,7 @@ const Customer_app = ({ app_settings, device_info }) => {
                                 </div>
 
                                 <div className='w-full mt-4'>
-                                    <button type='button' onClick={() => { set_app_id(app_settings._id); openModal("add_loan_modal"); }} className='bg-blue-500 text-[13px] text-white px-[10px] py-[10px] rounded-lg font-medium active:opacity-60 transition-all w-full' >Add New Loan</button>
+                                    <button type='button' onClick={() => { set_app_id(app_settings._id); openModal("add_loan_modal"); }} className='bg-orange-400 text-[13px] text-white px-[10px] py-[10px] rounded-lg font-medium active:opacity-60 transition-all w-full' >Add New Loan</button>
                                 </div>
 
                             </div>
@@ -431,7 +599,7 @@ const Customer_app = ({ app_settings, device_info }) => {
                                     <button
                                         type='button'
                                         onClick={generate_link_btn}
-                                        className={`${loan_id_2 ? "bg-emerald-500 active:opacity-60" : "bg-zinc-300 cursor-not-allowed"} text-[13px] text-white px-[10px] py-[10px] rounded-lg font-medium  transition-all w-full`}
+                                        className={`${loan_id_2 ? "bg-blue-500 active:opacity-60" : "bg-zinc-300 cursor-not-allowed"} text-[13px] text-white px-[10px] py-[10px] rounded-lg font-medium  transition-all w-full`}
                                         disabled={!loan_id_2}
                                     >
                                         Generate Repayment Link

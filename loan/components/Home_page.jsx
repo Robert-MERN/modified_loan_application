@@ -41,67 +41,78 @@ const HomePage = ({ app_settings, myloans }) => {
 
 
     return (
-        <div className={`w-screen min-h-screen bg-gradient-to-b from-emerald-400 via-teal-200 to-emerald-50 to-80% px-[15px] relative ${styles.scrollBar}`} >
+        <div className={`w-screen min-h-screen bg-gradient-to-b from-blue-500 via-blue-300 to-blue-200 to-80% px-[15px] relative ${styles.scrollBar}`} >
 
-            <Navbar app_settings={app_settings} />
+            <Navbar user={true} app_settings={app_settings} />
 
 
 
-            <div className={`mt-[52px] ${styles.scrollBar}`}>
-                <div className='w-full flex flex-col items-center' >
-                    <p className='font-semuibold text-[18px] text-white text-center select-none flex items-center' >
-                        Available credit
+            <div className={`mt-[52px] pt-[50px] ${styles.scrollBar}`}>
+
+
+                {/* Main Card */}
+                <div className="w-full bg-white/70 backdrop-blur-lg rounded-3xl p-6 shadow-2xl border-2 border-white/50">
+                    <p className="text-slate-500 text-sm font-medium text-center uppercase tracking-wider">
+                        Available Limit
                     </p>
-                    <p onClick={() => openModal("borrow_amount_modal")} className='font-bold text-[32px] text-white text-center mt-2 select-none active:opacity-40 transition-all cursor-pointer' >
+                    <h2 onClick={() => openModal("borrow_amount_modal")} className="text-4xl font-bold text-slate-800 text-center mt-2 flex justify-center items-center cursor-pointer">
                         ₹ {borrow_amount}
-                        <ArrowDropDownIcon className='scale-[1.8] ml-2' />
-                    </p>
-                </div>
+                        <ArrowDropDownIcon className="text-blue-500 ml-1" />
+                    </h2>
 
-                <div className='mt-5 w-full flex' >
-                    <div className='flex-1 flex flex-col items-center border-r border-stone-100 gap-2 select-none' >
-
-                        <p className='font-semibold text-[15px] text-white' >Total amount</p>
-                        <p className='font-bold text-[18px] text-white' >₹ {borrow_amount}</p>
-
-                    </div>
-                    <div className='flex-1 flex flex-col items-center gap-2 select-none' >
-
-                        <p className='font-semibold text-[15px] text-white' >Spent</p>
-                        <p className='font-bold text-[18px] text-white' >₹ {total_spent.toLocaleString("en-US")}.00</p>
-                    </div>
-                </div>
-
-                <div className='w-full px-[40px] flex justify-center mt-12' >
-                    <button onClick={() => handle_options(`/borrow/${router.query.app_id}`)} className='w-full bg-white active:opacity-75 transition-all py-[12px] text-[16px] text-teal-500 rounded-full font-bold' >
-                        Borrow Now
-                    </button>
-                </div>
-
-                <div className='w-full bg-white rounded-lg px-[15px] pt-[30px] pb-[35px] mt-8' >
-                    <div className='w-full flex gap-4' >
-
-
-                        <div onClick={() => handle_options(`/borrow/${router.query.app_id}`)} className='px-[10px] py-[25px] bg-orange-100 rounded-lg flex items-center gap-2 w-full active:opacity-60 transition-all cursor-pointer select-none' >
-
-                            <div className='w-[40px] h-[40px] grid place-items-center rounded-full  bg-gradient-to-b from-orange-200  to-orange-400'>
-                                <Image src={rupee_bag} alt="Rupee Icon" className='text-white w-[30px]' />
-                            </div>
-                            <p onClick={() => handle_options(`/borrow/${router.query.app_id}`)} className='w-[60px] text-[12px] font-medium text-stone-800 text-center select-none break-words' >Refinance</p>
+                    {/* Simple Stats Row */}
+                    <div className="flex mt-8 py-4 border-t border-slate-100">
+                        <div className="flex-1 text-center">
+                            <p className="text-xs text-slate-400">Total Limit</p>
+                            <p className="font-bold text-slate-700">₹ {borrow_amount}</p>
                         </div>
-
-                        <div onClick={() => handle_options(`/borrow-history/${router.query.app_id}`)} className='px-[10px] py-[25px] bg-teal-100 rounded-lg flex items-center  w-full gap-2 active:opacity-60 transition-all cursor-pointer select-none' >
-
-                            <div className='w-[40px] h-[40px] rounded-full bg-gradient-to-b from-teal-200 to-teal-400 flex justify-center items-center'>
-                                <Image src={rupee_pocket} alt="Rupee Icon" className='text-white object-contain w-[45px]' />
-                            </div>
-                            <p className='w-[60px] break-words text-[12px] leading-[14px] font-medium text-stone-800 text-center select-none' >Borrowing history</p>
+                        <div className="w-[1px] bg-slate-100"></div>
+                        <div className="flex-1 text-center">
+                            <p className="text-xs text-slate-400">Spent</p>
+                            <p className="font-bold text-slate-700">₹ {total_spent.toLocaleString("en-US")}.00</p>
                         </div>
                     </div>
+                </div>
 
-                    <div className='w-full px-[5px] py-[15px] bg-emerald-50 mt-4 rounded-lg' >
-                        <p className='text-zinc-400 lead leading-[14px] font-medium text-center text-[11px] select-none' >
-                            The platform promises to protect your data security and will not spread your personal information
+                {/* Borrow Now Button */}
+                <button
+                    onClick={() => handle_options(`/borrow/${router.query.app_id}`)}
+                    className="w-full mt-12 py-[14px] bg-gradient-to-r from-[#53a7c1] to-[#4b89dc] text-white font-bold text-lg rounded-3xl shadow-[0px_8px_20px_rgba(75,137,220,0.35)] active:scale-95 transition-all duration-200 border-b-[3px] border-black/10 flex items-center justify-center shadow-blue-400"
+                >
+                    Borrow Now
+                </button>
+
+
+                <div className="w-full bg-white/70 backdrop-blur-lg rounded-3xl p-4 mt-6 border-2 border-white/50 shadow-sm">
+                    <div className="flex gap-4">
+                        {/* Refinance Card */}
+                        <div
+                            onClick={() => handle_options(`/borrow/${router.query.app_id}`)}
+                            className="flex-1 bg-rose-50/50 hover:bg-rose-100/60 transition-colors rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer border border-rose-100/50"
+                        >
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-400 to-red-500 shadow-md flex items-center justify-center mb-2">
+                                <Image src={rupee_bag} alt="Refinance" className="w-6 h-6 object-contain brightness-0 invert" />
+                            </div>
+                            <p className="text-[13px] font-semibold text-rose-900">Refinance</p>
+                        </div>
+
+                        {/* Borrowing History Card */}
+                        <div
+                            onClick={() => handle_options(`/borrow-history/${router.query.app_id}`)}
+                            className="flex-1 bg-blue-50/50 hover:bg-blue-100/60 transition-colors rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer border border-blue-100/50"
+                        >
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 shadow-md flex items-center justify-center mb-2">
+                                <Image src={rupee_pocket} alt="History" className="w-7 h-7 object-contain brightness-0 invert" />
+                            </div>
+                            <p className="text-[13px] font-semibold text-blue-900 text-center leading-tight">Borrowing History</p>
+                        </div>
+                    </div>
+
+                    {/* Security Disclaimer Section */}
+                    <div className="mt-4 px-3 py-3 bg-slate-50/80 rounded-xl border border-slate-100">
+                        <p className="text-slate-400 text-[10px] leading-relaxed text-center font-medium">
+                            <span className="inline-block mr-1">🛡️</span>
+                            The platform promises to protect your data security and will not spread your personal information.
                         </p>
                     </div>
                 </div>

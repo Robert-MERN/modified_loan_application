@@ -151,7 +151,7 @@ const Borrow = ({ app_settings }) => {
 
 
             <p className='text-[12px] font-semibold text-stone-600 px-[15px] w-full text-center my-4 select-none' >
-                There are currently only <span className='px-[6px] py-[1px] bg-emerald-50 text-emerald-400' >0</span> <span className='px-[6px] py-[1px] bg-emerald-50 text-emerald-400 ml-[2px]' >2</span> <span className='px-[6px] py-[1px] bg-emerald-50 text-emerald-400 ml-[2px]' >6</span> <span className='px-[6px] py-[1px] bg-emerald-50 text-emerald-400 ml-[2px]' >9</span> loan quotas left
+                There are currently only <span className='px-[6px] py-[1px] bg-blue-50 text-blue-400' >0</span> <span className='px-[6px] py-[1px] bg-blue-50 text-blue-400 ml-[2px]' >2</span> <span className='px-[6px] py-[1px] bg-blue-50 text-blue-400 ml-[2px]' >6</span> <span className='px-[6px] py-[1px] bg-blue-50 text-blue-400 ml-[2px]' >9</span> loan quotas left
             </p>
 
             <div className='w-full pb-[140px]' >
@@ -159,7 +159,7 @@ const Borrow = ({ app_settings }) => {
 
                     <div key={index} onClick={() => select_product(e)} className='w-full px-[15px] py-[15px] flex justify-between items-center bg-white shadow active:opacity-60 transition-all select-none mb-3' >
                         <div className='flex gap-3 items-center' >
-                            <button className={`border-emerald-400 ${check_product(e) ? "bg-emerald-400" : "bg-white"} border rounded-full p-[3px] text-[12px] font-thin text-white`} >
+                            <button className={`border-blue-500 ${check_product(e) ? "bg-blue-500" : "bg-white"} border rounded-full p-[3px] text-[12px] font-thin text-white`} >
                                 {check_product(e) ?
                                     <FaCheck />
                                     :
@@ -173,7 +173,7 @@ const Borrow = ({ app_settings }) => {
                                 </div>
                                 <div>
                                     <p className='text-[11px] text-stone-600 font-semibold' >{e.name}</p>
-                                    <p className='text-[9px] text-emerald-400 font-medium' >{e.users} users have borrowed</p>
+                                    <p className='text-[9px] text-blue-400 font-medium' >{e.users} users have borrowed</p>
                                 </div>
 
                             </div>
@@ -194,7 +194,7 @@ const Borrow = ({ app_settings }) => {
 
             <footer className='w-screen fixed bottom-0 left-0 right-0 bg-white px-[10px] pt-[15px] pb-[20px] border-t border-stone-200 z-50 select-none' >
                 <div className='flex gap-2 items-center mb-[12px]' >
-                    <button onClick={() => agree !== "agree" ? set_agree("agree") : set_agree("")} className={`border-emerald-400 ${agree === "agree" ? "bg-emerald-400" : "bg-white"} border rounded-full p-[3px] text-[12px] font-thin text-white`} >
+                    <button onClick={() => agree !== "agree" ? set_agree("agree") : set_agree("")} className={`border-blue-500 ${agree === "agree" ? "bg-blue-500" : "bg-white"} border rounded-full p-[3px] text-[12px] font-thin text-white`} >
                         {agree === "agree" ?
                             <FaCheck />
                             :
@@ -202,13 +202,13 @@ const Borrow = ({ app_settings }) => {
 
                         }
                     </button>
-                    <p className='text-[12px] text-stone-400 font-semibold' >I agree to the  <span className='text-emerald-400' >{"{{Loan Agreement}}"}</span> </p>
+                    <p className='text-[12px] text-stone-400 font-semibold' >I agree to the  <span className='text-blue-500' >{"{{Loan Agreement}}"}</span> </p>
                 </div>
 
-                <button className='w-full flex border border-emerald-400 rounded-full overflow-hidden relative' >
+                <button className='w-full flex border border-blue-500 rounded-full overflow-hidden relative' >
 
 
-                    <div className='text-emerald-400 text-[10px] w-full pr-[10px] py-[13px] flex flex-col active:bg-emerald-50 transition-all leading-[14px] select-none' >
+                    <div className='text-blue-400 text-[10px] w-full pr-[10px] py-[13px] flex flex-col active:bg-blue-50 transition-all leading-[14px] select-none' >
                         <p>
                             The highest withdrawal limit
                         </p>
@@ -216,7 +216,7 @@ const Borrow = ({ app_settings }) => {
                     </div>
 
 
-                    <div onClick={handle_submit} className='bg-emerald-400 active:bg-emerald-300 text-white text-[10px] w-full py-[13px] flex flex-col transition-all leading-[14px] z-10 rounded-full select-none' >
+                    <div onClick={handle_submit} className='bg-blue-500 active:bg-blue-300 text-white text-[10px] w-full py-[13px] flex flex-col transition-all leading-[14px] z-10 rounded-full select-none' >
                         {selected_products.length} products have been selected
                         <p className='text-[15px] font-bold' >Apply now</p>
                     </div>

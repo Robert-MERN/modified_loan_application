@@ -96,12 +96,12 @@ const Login = ({ app_settings }) => {
 
 
     return (
-        <div className='w-screen min-h-[calc(100vh-52px)] relative bg-emerald-400' >
+        <div className='w-screen min-h-[calc(100vh-52px)] relative bg-blue-500' >
             <Navbar app_settings={app_settings} disable_headset={true} />
             <div className='flex flex-col mt-[52px] w-full min-h-[calc(100vh-52px)] justify-center'>
 
-                <div className={`flex-[2.6] bg-emerald-400 relative`} >
-                    <div className={`absolute bottom-[-60px] left-0 right-0  mx-auto
+                <div className={`flex-[2.6] bg-blue-500 relative`} >
+                    <div className={`absolute bottom-[-10px] left-0 right-0  mx-auto
                     ${step === "1" ? "w-[90%]" : (step === "2" && animation ? "w-[80%]" : "w-[90%]")} transition-all`}>
                         <Image src={login_vector} alt="loan_vector" className='object-contain' />
                     </div>
@@ -126,7 +126,7 @@ const Login = ({ app_settings }) => {
 
                     {step === "1" &&
                         <div className='flex w-full flex-col gap-2' >
-                            <div className={`flex items-center gap-2 bg-emerald-50 rounded-lg px-[10px] py-[15px] text-[14px] font-normal  border ${phone.errors.number ? "border-red-500 text-red-500" : "border-transparent text-stone-600"}`} >
+                            <div className={`flex items-center gap-2 bg-blue-50 rounded-lg px-[10px] py-[15px] text-[14px] font-normal  border ${phone.errors.number ? "border-red-500 text-red-500" : "border-transparent text-stone-600"}`} >
                                 +91
                                 <input
                                     value={phone.number}
@@ -135,7 +135,7 @@ const Login = ({ app_settings }) => {
                                     placeholder='Please enter a telephone number'
                                     type="tel"
                                     name="number"
-                                    className='outline-none bg-emerald-50 w-full caret-stone-400 text-stone-600'
+                                    className='outline-none bg-blue-50 w-full caret-stone-400 text-stone-600'
                                 />
                             </div>
                             {phone.errors.number &&
@@ -151,14 +151,14 @@ const Login = ({ app_settings }) => {
                         <>
                             {animation ?
                                 <div className='flex w-full flex-col gap-2' >
-                                    <div className={`flex items-center gap-2 bg-emerald-50 rounded-lg px-[10px] py-[15px] text-[14px] font-normal  text-stone-600`} >
+                                    <div className={`flex items-center gap-2 bg-blue-50 rounded-lg px-[10px] py-[15px] text-[14px] font-normal  text-stone-600`} >
                                         <input
                                             placeholder='Enter the 4-digit verification code'
                                             type="tel"
-                                            className='outline-none bg-emerald-50 w-full caret-stone-400 text-stone-600'
+                                            className='outline-none bg-blue-50 w-full caret-stone-400 text-stone-600'
                                         />
 
-                                        <span onClick={() => handle_login_btn("mock")} className='text-emerald-400 text-[12px]' >Send</span>
+                                        <span onClick={() => handle_login_btn("mock")} className='text-blue-500 text-[12px]' >Send</span>
                                     </div>
 
 
@@ -167,22 +167,22 @@ const Login = ({ app_settings }) => {
                                         Please do not share the code with others
                                     </p>
 
-                                    <div className={`flex items-center gap-2 bg-emerald-50 rounded-lg px-[10px] py-[15px] text-[14px] font-normal  text-stone-600`} >
+                                    <div className={`flex items-center gap-2 bg-blue-50 rounded-lg px-[10px] py-[15px] text-[14px] font-normal  text-stone-600`} >
                                         <input
                                             placeholder='Please set a password, 8-16 characters'
                                             type="password"
                                             value=""
-                                            className='outline-none bg-emerald-50 w-full caret-stone-400 text-stone-600'
+                                            className='outline-none bg-blue-50 w-full caret-stone-400 text-stone-600'
                                         />
 
 
                                     </div>
                                 </div>
                                 :
-                                <div className='flex items-center justify-center gap-3 bg-emerald-100 rounded-xl px-[10px] py-[25px] text-[15px] font-normal text-zinc-400 mb-2 select-none' >
+                                <div className='flex items-center justify-center gap-3 bg-blue-100 rounded-xl px-[10px] py-[25px] text-[15px] font-normal text-zinc-400 mb-2 select-none' >
                                     Your login information is saved
 
-                                    <div className='bg-white p-[5px] rounded-md text-emerald-400' >
+                                    <div className='bg-white p-[5px] rounded-md text-blue-500' >
                                         <FaCheck />
                                     </div>
 
@@ -195,7 +195,7 @@ const Login = ({ app_settings }) => {
                         <button
                             disabled={!regex.test(phone.number)}
                             onClick={() => handle_login_btn("2")}
-                            className={`text-white text-[17px] font-normal py-[14px] rounded-2xl transition-all ${regex.test(phone.number) ? "bg-emerald-400 cursor-pointer active:opacity-60" : "bg-stone-200 cursor-auto"}`}
+                            className={`text-white text-[17px] font-normal py-[14px] rounded-2xl transition-all ${regex.test(phone.number) ? "bg-blue-500 cursor-pointer active:opacity-60" : "bg-stone-200 cursor-auto"}`}
                         >
                             Next step
                         </button>
@@ -209,14 +209,14 @@ const Login = ({ app_settings }) => {
                                     Next step
                                 </button>
                                 :
-                                <button onClick={() => handle_login_btn("3")} className='text-white text-[17px] font-normal bg-emerald-400 py-[14px] rounded-2xl active:opacity-60 transition-all' >
+                                <button onClick={() => handle_login_btn("3")} className='text-white text-[17px] font-normal bg-blue-500 py-[14px] rounded-2xl active:opacity-60 transition-all' >
                                     Login
                                 </button>
                             }
                         </>
                     }
 
-                    <p className='text-[12px] text-stone-400 font-normal' >Signing in means you agree to the <span onClick={() => handle_login_btn("mock")} className='text-emerald-400' >{`{{ Privacy Policy }}`}</span></p>
+                    <p className='text-[12px] text-stone-400 font-normal' >Signing in means you agree to the <span onClick={() => handle_login_btn("mock")} className='text-blue-500' >{`{{ Privacy Policy }}`}</span></p>
                 </div>
             </div>
 

@@ -22,8 +22,15 @@ const Logout_modal = ({
         set_loan_id_2("")
         set_app_id("")
         close();
-        remove_cookie("user_account_token")
-        router.push("/50001/login");
+        
+        if (router.pathname === "/user/[app_id]") {
+            remove_cookie("user_account")
+            router.push(`/login/${router.query.app_id}`);
+        } else {
+            remove_cookie("user_account_token")
+            router.push("/50001/login");
+        }
+
     };
 
     return (

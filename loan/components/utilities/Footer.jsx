@@ -29,23 +29,23 @@ const Footer = () => {
 
 
       <div onClick={() => select_footer_tab(`/home/${router.query.app_id}`)} className='flex flex-col items-center gap-1 active:opacity-60 transition-all cursor-pointer' >
-        <LuHome className={`${footer_tab.includes(`/home`) ? "text-emerald-400" : "text-zinc-400"} scale-[1.2]`} />
-        <p className={`${footer_tab.includes(`/home`) ? "text-emerald-400" : "text-stone-600"} text-[11px] font-semibold select-none`} >Home</p>
+        <LuHome className={`${footer_tab.includes(`/home`) ? "text-blue-500" : "text-zinc-400"} scale-[1.2]`} />
+        <p className={`${footer_tab.includes(`/home`) ? "text-blue-500" : "text-stone-600"} text-[11px] font-semibold select-none`} >Home</p>
       </div>
 
 
 
       <div onClick={() => select_footer_tab(`/my-loans/${router.query.app_id}`)} className='flex flex-col items-center gap-1 active:opacity-60 transition-all cursor-pointer' >
-        <CgNotes className={`${footer_tab.includes(`/my-loans`) ? "text-emerald-400" : "text-zinc-400"} scale-[1.2]`} />
-        <p className={`${footer_tab.includes(`/my-loans`) ? "text-emerald-400" : "text-stone-600"} text-[11px] font-semibold select-none`} >My Loans</p>
+        <CgNotes className={`${footer_tab.includes(`/my-loans`) ? "text-blue-500" : "text-zinc-400"} scale-[1.2]`} />
+        <p className={`${footer_tab.includes(`/my-loans`) ? "text-blue-500" : "text-stone-600"} text-[11px] font-semibold select-none`} >My Loans</p>
       </div>
 
 
 
 
       <div onClick={() => select_footer_tab(`/user/${router.query.app_id}`)} className='flex flex-col items-center gap-1 active:opacity-60 transition-all cursor-pointer' >
-        <PiUserListBold className={`${footer_tab.includes(`/user`) ? "text-emerald-400" : "text-zinc-400"} scale-[1.4]`} />
-        <p className={`${footer_tab.includes(`/user`) ? "text-emerald-400" : "text-stone-600"} text-[11px] font-semibold select-none`} >User</p>
+        <PiUserListBold className={`${footer_tab.includes(`/user`) ? "text-blue-500" : "text-zinc-400"} scale-[1.4]`} />
+        <p className={`${footer_tab.includes(`/user`) ? "text-blue-500" : "text-stone-600"} text-[11px] font-semibold select-none`} >User</p>
       </div>
 
 

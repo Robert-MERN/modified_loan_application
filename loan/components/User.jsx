@@ -62,11 +62,11 @@ const User = ({ app_settings }) => {
             <Navbar back_btn={false} app_settings={app_settings} />
 
             <div>
-                <div className='w-screen relative bg-emerald-400 mt-[52px] px-[15px] h-[50px]' >
+                <div className='w-screen relative bg-blue-500 mt-[52px] px-[15px] h-[50px]' >
 
                     <div className='absolute w-full flex justify-center left-0 right-0 top-[10px] px-[20px]' >
                         <div className='h-[100px] bg-white w-full rounded-2xl p-[20px] flex gap-4' >
-                            <div className='w-[60px] h-[60px] rounded-full bg-emerald-400 pt-[3px] overflow-hidden' >
+                            <div className='w-[60px] h-[60px] rounded-full bg-blue-100 pt-[3px] overflow-hidden' >
 
                                 <Image src={user_pic} className='object-contain scale-[0.9]' alt="user_profile" />
                             </div>
@@ -105,7 +105,7 @@ const User = ({ app_settings }) => {
                 </div>
 
                 <div className='w-full px-[20px] py-[15px] flex gap-3 mt-4 mb-[106px]' >
-                    <MdOutlineVerifiedUser className='text-emerald-400 scale-[1.6]' />
+                    <MdOutlineVerifiedUser className='text-blue-500 scale-[1.6]' />
                     <p className='text-stone-300 lead leading-[14px] font-medium text-[11px] select-none' >
                         The platform promises to protect your data security and will not spread your personal information
                     </p>

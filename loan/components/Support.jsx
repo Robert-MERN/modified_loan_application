@@ -56,7 +56,7 @@ const Support = ({ app_settings }) => {
             <div className='w-full bg-white rounded-lg flex items-center px-[15px] py-[20px] shadow-md' >
 
                 <button onClick={() => handle_options()} className='w-full flex items-center gap-2 select-none active:opacity-[.65] transition-all text-left' >
-                    <span className='w-[35px] h-[35px] rounded-xl bg-orange-200 grid place-items-center' >
+                    <span className='w-[35px] h-[35px] rounded-xl bg-orange-300 grid place-items-center' >
                         <CgNotes className='text-white' />
                     </span>
                     <span className='text-[12px] text-stone-600 whitespace-break-spaces font-semibold select-none text-left'>Complaint Feedback</span>
@@ -77,49 +77,49 @@ const Support = ({ app_settings }) => {
 
             <div className='w-full pb-6 px-[32px] pt-2 relative' >
 
-                <div className='w-[30px] h-[30px] rounded-full absolute bg-emerald-400 left-0 top-[22px] flex justify-center items-end overflow-hidden border-2 border-emerald-500' >
-                    <Person3Icon className='text-amber-300 scale-[1.2]' />
+                <div className='w-[30px] h-[30px] rounded-full absolute bg-blue-500 left-0 top-[22px] flex justify-center items-end overflow-hidden border-2 border-blue-600' >
+                    <Person3Icon className='text-white scale-[1.2]' />
                 </div>
 
 
                 <p className='text-stone-400 lead leading-[14px] font-medium text-[13px] select-none mt-4 mb-1' >
                     Customer Service Assistant
                 </p>
-                <div className='w-full px-[10px] py-[15px] bg-gradient-to-b from-emerald-50 to-white to-[25%] rounded-lg shadow-md' >
+                <div className='w-full px-[10px] py-[15px] bg-gradient-to-b from-blue-100 to-white to-[25%] rounded-lg shadow-md' >
                     <div className='w-full flex justify-between items-start' >
 
                         <div onClick={() => handle_options()} className='flex flex-col gap-2 items-center active:opacity-[.40] transition-all'>
-                            <div className='border border-emerald-400 p-[2px] rounded-[12px]'  >
-                                <WhatshotIcon className='text-emerald-400 scale-75' />
+                            <div className='border border-blue-500 p-[2px] rounded-[12px]'  >
+                                <WhatshotIcon className='text-blue-500 scale-75' />
                             </div>
-                            <p className='text-emerald-500 lead leading-[11px] font-medium text-[9px] select-none text-center' >
+                            <p className='text-blue-600 lead leading-[11px] font-medium text-[9px] select-none text-center' >
                                 Top Questions
                             </p>
                         </div>
 
                         <div onClick={() => handle_options()} className='flex flex-col gap-2 items-center active:opacity-[.40] transition-all'>
-                            <div className='border border-emerald-400 p-[6px] rounded-[12px]' >
-                                <LiaCoinsSolid className='text-emerald-400 scale-[1.4]' />
+                            <div className='border border-blue-500 p-[6px] rounded-[12px]' >
+                                <LiaCoinsSolid className='text-blue-500 scale-[1.4]' />
                             </div>
-                            <p className='text-emerald-500 lead leading-[11px] font-medium text-[9px] select-none text-center' >
+                            <p className='text-blue-600 lead leading-[11px] font-medium text-[9px] select-none text-center' >
                                 Loan Questions
                             </p>
                         </div>
 
                         <div onClick={() => handle_options()} className='flex flex-col gap-2 items-center active:opacity-[.40] transition-all'>
-                            <div className='border border-emerald-400 p-[2px] rounded-[10px]' >
-                                <CreditCardIcon className='text-emerald-400 scale-75' />
+                            <div className='border border-blue-500 p-[2px] rounded-[10px]' >
+                                <CreditCardIcon className='text-blue-500 scale-75' />
                             </div>
-                            <p className='text-emerald-500 lead leading-[11px] font-medium text-[9px] select-none text-center' >
+                            <p className='text-blue-600 lead leading-[11px] font-medium text-[9px] select-none text-center' >
                                 Payment Questions
                             </p>
                         </div>
 
                         <div onClick={() => handle_options()} className='flex flex-col gap-2 items-center active:opacity-[.40] transition-all' >
-                            <div className='border border-emerald-400 p-[6px] rounded-[10px]' >
-                                <CiLock className='text-emerald-400 scale-[1.2]' />
+                            <div className='border border-blue-500 p-[6px] rounded-[10px]' >
+                                <CiLock className='text-blue-500 scale-[1.2]' />
                             </div>
-                            <p className='text-emerald-500 lead leading-[11px] font-medium text-[9px] select-none text-center' >
+                            <p className='text-blue-600 lead leading-[11px] font-medium text-[9px] select-none text-center' >
                                 Data Security
                             </p>
                         </div>
