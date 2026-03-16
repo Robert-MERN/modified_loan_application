@@ -1,11 +1,14 @@
 'use client';
-
 import React, { useEffect } from 'react'
 import Navbar from './utilities/Navbar'
 import useStateContext from '@/context/ContextProvider'
 import { useState } from 'react'
 import Link from 'next/link'
 import clipboardCopy from 'clipboard-copy';
+import crypto from "crypto";
+import Switch from '@mui/material/Switch';
+
+
 
 
 
@@ -51,6 +54,7 @@ const Customer_app = ({ app_settings, device_info }) => {
         repayment_time: "",
         loan_status: false,
         // Receipt fields
+        is_receipt_uploaded: false,
         receipt_time: "",
         receipt_loan_amount: "",
         receipt_account_name: "",
@@ -86,6 +90,7 @@ const Customer_app = ({ app_settings, device_info }) => {
                 lenders: selected_loan?.lenders || "",
                 repayment_time: selected_loan?.repayment_time || "",
                 loan_status: selected_loan?.loan_status || "",
+                is_receipt_uploaded: selected_loan?.is_receipt_uploaded || false,
                 receipt_time: selected_loan?.receipt_time || "",
                 receipt_loan_amount: selected_loan?.receipt_loan_amount || "",
                 receipt_account_name: selected_loan?.receipt_account_name || "",
@@ -181,7 +186,11 @@ const Customer_app = ({ app_settings, device_info }) => {
     }
 
     const handle_update = async (targ, val) => {
-        const settings = delete_empty_pairs(val);
+        // Extracting is_receipt_uploaded to handle it separately as it is a toggle and can be false which we don't want to delete while removing empty values
+        const { is_receipt_uploaded, ...rest } = val;
+        // Deleting empty key-value pairs to avoid unnecessary updates and for better performance
+        const settings = delete_empty_pairs(rest);
+
         if (targ === "app") {
             handle_update_app_settings(app_id, settings, set_default_states, device_info, handle_user_device_info);
 
@@ -193,27 +202,28 @@ const Customer_app = ({ app_settings, device_info }) => {
                 _id = loan_id
             }
 
-
-            // Setting Receipt Time based on Repayment Time
-            if (!settings.receipt_time && isValidDate(settings.repayment_time)) {
-                settings.receipt_time = generateReceiptTime(settings.repayment_time);
+            // If receipt form is enabled then only we will set default values for receipt related fields if they are not set by user because these fields are dependent on enabling receipt form toggle and we don't want to set values for those fields if user has not enabled the receipt form
+            if (is_receipt_uploaded) {
+                // Setting Receipt Time based on Repayment Time
+                if (!settings.receipt_time && isValidDate(settings.repayment_time)) {
+                    settings.receipt_time = generateReceiptTime(settings.repayment_time);
+                }
+                // Setting receipt amount based on product loan amount
+                if (!settings.receipt_loan_amount && !isNaN(Number(settings.loan_amount))) {
+                    settings.receipt_loan_amount = Number(settings.loan_amount) * 0.6;
+                }
+                // Setting receipt account name based on user name
+                if (!settings.receipt_account_name && app_settings.user_name) {
+                    settings.receipt_account_name = app_settings.user_name;
+                }
+                // Setting receipt serial number if not generated back then
+                if (!settings.receipt_serial_number) {
+                    settings.receipt_serial_number = generateSerial();
+                }
             }
-            // Setting receipt amount based on product loan amount
-            if (!settings.receipt_loan_amount && !isNaN(Number(settings.loan_amount))) {
-                settings.receipt_loan_amount = Number(settings.loan_amount) * 0.6;
-            }
-            // Setting receipt account name based on user name
-            if (!settings.receipt_account_name && app_settings.user_name) {
-                settings.receipt_account_name = app_settings.user_name;
-            }
-            // Setting receipt serial number if not generated back then
-            if (!settings.receipt_serial_number) {
-                settings.receipt_serial_number = generateSerial();
-            }
 
 
-
-            handle_update_myloan(_id, settings, set_default_states_2, device_info, handle_user_device_info);
+            handle_update_myloan(_id, { ...settings, is_receipt_uploaded }, set_default_states_2, device_info, handle_user_device_info);
 
         }
     }
@@ -423,84 +433,93 @@ const Customer_app = ({ app_settings, device_info }) => {
                                         </select>
                                     </div>
 
-                                    <div className='w-full bg-orange-100 py-[12px] px-[15px] rounded-t-xl mt-4 text-center' >
-                                        <span className='text-orange-500 text-center font-semibold'>Loan Receipt Form</span>
-                                    </div>
-
-                                    <div className='w-full flex flex-col gap-1'>
-                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Time</label>
-                                        < input
-                                            placeholder='DD-MM-YYYY'
-                                            type="text"
-                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
-                                            name="receipt_time"
-                                            value={values_2.receipt_time || ""}
-                                            onChange={handle_change_2}
+                                    {/* Receipt Form Toggle */}
+                                    <div className={`w-full flex justify-between items-center py-[12px] px-[15px] rounded-t-xl mt-4 text-center font-semibold transition-all ${values_2.is_receipt_uploaded ? "bg-orange-100 text-orange-500 " : "bg-stone-200 text-stone-700"}`} >
+                                        <p>{values_2.is_receipt_uploaded ? "Disable" : "Enable"} Receipt Form</p>
+                                        <Switch
+                                            checked={values_2.is_receipt_uploaded || false}
+                                            onChange={(e) => handle_change_2({ target: { name: "is_receipt_uploaded", value: e.target.checked } })}
+                                            color='warning'
                                         />
                                     </div>
 
-                                    <div className='w-full flex flex-col gap-1'>
-                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Loan Amount</label>
-                                        < input
-                                            placeholder='00.00'
-                                            type="text"
-                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
-                                            name="receipt_loan_amount"
-                                            value={values_2.receipt_loan_amount || values_2.loan_amount || ""}
-                                            onChange={handle_change_2}
-                                        />
-                                    </div>
+                                    {values_2.is_receipt_uploaded &&
+                                        <>
 
-                                    <div className='w-full flex flex-col gap-1'>
-                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Account Name</label>
-                                        < input
-                                            placeholder='Account Holder Name'
-                                            type="text"
-                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
-                                            name="receipt_account_name"
-                                            value={values_2.receipt_account_name || app_settings.user_name || ""}
-                                            onChange={handle_change_2}
-                                        />
-                                    </div>
+                                            <div className='w-full flex flex-col gap-1'>
+                                                <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Time</label>
+                                                < input
+                                                    placeholder='DD-MM-YYYY'
+                                                    type="text"
+                                                    className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                                    name="receipt_time"
+                                                    value={values_2.receipt_time || ""}
+                                                    onChange={handle_change_2}
+                                                />
+                                            </div>
 
-                                    <div className='w-full flex flex-col gap-1'>
-                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Account IFSC</label>
-                                        < input
-                                            placeholder='IFSC'
-                                            type="text"
-                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
-                                            name="receipt_account_ifsc"
-                                            value={values_2.receipt_account_ifsc || ""}
-                                            onChange={handle_change_2}
-                                        />
-                                    </div>
+                                            <div className='w-full flex flex-col gap-1'>
+                                                <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Loan Amount</label>
+                                                < input
+                                                    placeholder='00.00'
+                                                    type="text"
+                                                    className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                                    name="receipt_loan_amount"
+                                                    value={values_2.receipt_loan_amount || ""}
+                                                    onChange={handle_change_2}
+                                                />
+                                            </div>
 
-                                    <div className='w-full flex flex-col gap-1'>
-                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Account Number</label>
-                                        < input
-                                            placeholder='Bank A/c no.'
-                                            type="text"
-                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
-                                            name="receipt_account_number"
-                                            value={values_2.receipt_account_number || ""}
-                                            onChange={handle_change_2}
-                                        />
-                                    </div>
+                                            <div className='w-full flex flex-col gap-1'>
+                                                <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Account Name</label>
+                                                < input
+                                                    placeholder='Account Holder Name'
+                                                    type="text"
+                                                    className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                                    name="receipt_account_name"
+                                                    value={values_2.receipt_account_name || ""}
+                                                    onChange={handle_change_2}
+                                                />
+                                            </div>
 
-                                    <div className='w-full flex flex-col gap-1'>
-                                        <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Serial Number</label>
-                                        < input
-                                            placeholder='Order no.'
-                                            type="text"
-                                            className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
-                                            name="receipt_serial_number"
-                                            value={values_2.receipt_serial_number || app_settings.receipt_serial_number || ""}
-                                            onChange={handle_change_2}
-                                        />
-                                    </div>
+                                            <div className='w-full flex flex-col gap-1'>
+                                                <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Account IFSC</label>
+                                                < input
+                                                    placeholder='IFSC'
+                                                    type="text"
+                                                    className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                                    name="receipt_account_ifsc"
+                                                    value={values_2.receipt_account_ifsc || ""}
+                                                    onChange={handle_change_2}
+                                                />
+                                            </div>
 
+                                            <div className='w-full flex flex-col gap-1'>
+                                                <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Account Number</label>
+                                                < input
+                                                    placeholder='Bank A/c no.'
+                                                    type="text"
+                                                    className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                                    name="receipt_account_number"
+                                                    value={values_2.receipt_account_number || ""}
+                                                    onChange={handle_change_2}
+                                                />
+                                            </div>
 
+                                            <div className='w-full flex flex-col gap-1'>
+                                                <label className='text-[13px] font-bold text-stone-700' htmlFor="">Receipt Serial Number</label>
+                                                < input
+                                                    placeholder='Order no.'
+                                                    type="text"
+                                                    className='text-[14px] font-medium text-stone-700 bg-white px-[15px] py-[10px] rounded-md border border-stone-200 outline-none w-full'
+                                                    name="receipt_serial_number"
+                                                    value={values_2.receipt_serial_number || app_settings.receipt_serial_number || ""}
+                                                    onChange={handle_change_2}
+                                                />
+                                            </div>
 
+                                        </>
+                                    }
 
                                 </>}
 

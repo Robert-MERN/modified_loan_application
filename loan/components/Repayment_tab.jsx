@@ -198,123 +198,125 @@ const Repayment_tab = ({ app_settings }) => {
 
 
                     {/* Accordion for Receipt */}
-                    <Accordion
-                        expanded={expanded}
-                        onChange={handleChange(true)}
-                        elevation={0}
-                        sx={{
-                            border: 'none',
-                            '&:before': { display: 'none' },
-                        }}
-                        className="shadow-none p-0"
-                    >
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1-content"
-                            id="panel1-header"
-                            className='px-[15px]'
+                    {Boolean(app_settings.is_receipt_uploaded) &&
+                        <Accordion
+                            expanded={expanded}
+                            onChange={handleChange(true)}
+                            elevation={0}
                             sx={{
-                                justifyContent: "center",
-                                "& .MuiAccordionSummary-content": {
-                                    justifyContent: "center",
-                                    flexGrow: 0,
-                                },
+                                border: 'none',
+                                '&:before': { display: 'none' },
                             }}
+                            className="shadow-none p-0"
                         >
-                            <p className="text-[14px] font-semibold text-slate-500 text-center">
-                                View receipt
-                            </p>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1-content"
+                                id="panel1-header"
+                                className='px-[15px]'
+                                sx={{
+                                    justifyContent: "center",
+                                    "& .MuiAccordionSummary-content": {
+                                        justifyContent: "center",
+                                        flexGrow: 0,
+                                    },
+                                }}
+                            >
+                                <p className="text-[14px] font-semibold text-slate-500 text-center">
+                                    View receipt
+                                </p>
 
-                        </AccordionSummary>
-                        <AccordionDetails className='px-[10px] border-t border-stone-200'>
+                            </AccordionSummary>
+                            <AccordionDetails className='px-[10px] border-t border-stone-200'>
 
-                            {/* Receipt Preview */}
-                            <div className='w-full flex justify-center flex-col items-center' >
+                                {/* Receipt Preview */}
+                                <div className='w-full flex justify-center flex-col items-center' >
 
-                                <div
-                                    ref={receiptRef}
-                                    className="min-w-[360px]  border rounded bg-white text-sm font-sans space-y-2 leading-7 mt-2"
-                                >
-                                    <div className='bg-gray-100 pt-4 px-4 pb-2 w-full' >
+                                    <div
+                                        ref={receiptRef}
+                                        className="min-w-[360px]  border rounded bg-white text-sm font-sans space-y-2 leading-7 mt-2"
+                                    >
+                                        <div className='bg-gray-100 pt-4 px-4 pb-2 w-full' >
 
 
-                                        <div className="flex items-center justify-center gap-[2px] font-semibold text-lg">
-                                            <div className="flex items-center justify-center w-[50px] h-[50px]">
-                                                <img src="/images/icon_logo.png" className="w-full h-full object-contain" />
+                                            <div className="flex items-center justify-center gap-[2px] font-semibold text-lg">
+                                                <div className="flex items-center justify-center w-[50px] h-[50px]">
+                                                    <img src="/images/icon_logo.png" className="w-full h-full object-contain" />
+                                                </div>
+                                                <div className='pb-[17px]'>
+                                                    <p className="leading-none capitalize">{app_settings.lenders || app_settings.app_name || ""}</p>
+                                                </div>
                                             </div>
-                                            <div className='pb-[17px]'>
-                                                <p className="leading-none capitalize">{app_settings.lenders || app_settings.app_name || ""}</p>
+
+
+                                            <div className="text-center text-[15px] text-green-600 font-medium">
+                                                Transaction Successful
+                                            </div>
+                                            <div className="text-center text-[15px] text-gray-500">
+                                                {app_settings.receipt_time
+                                                    ||
+                                                    (isValidDate(app_settings.repayment_time) ?
+                                                        generateReceiptTime(app_settings.repayment_time)
+                                                        :
+                                                        "")
+                                                }
                                             </div>
                                         </div>
 
+                                        <div className='px-4 pb-14'>
 
-                                        <div className="text-center text-[15px] text-green-600 font-medium">
-                                            Transaction Successful
+
+                                            <div className=''>
+                                                <p className='text-gray-500 text-[16px]'>Amount:</p>
+                                                <p className='text-[18px] text-stone-800 font-medium'>INR {app_settings?.receipt_loan_amount || (Number(app_settings?.loan_amount) * 0.6) || "00"}.00</p>
+                                            </div>
+
+
+                                            <div className='pt-4'>
+                                                <p className='text-gray-500 text-[16px]'>Sent by:</p>
+                                                <p className='text-stone-800 font-medium text-[16px] capitalize'>{app_settings.lenders || app_settings.app_name || ""}</p>
+
+                                                <div className='w-full flex justify-between items-center'>
+                                                    <p className='text-stone-800 font-medium text-[16px]'>Order sn:</p>
+                                                    <p className='text-stone-800 font-medium text-[16px]'>{app_settings?.receipt_serial_number || receipt_serial_number}</p>
+                                                </div>
+                                            </div>
+
+
+                                            <div className='pt-4'>
+                                                <p className='text-gray-500 text-[16px]'>Received by:</p>
+
+                                                <div className='w-full flex justify-between items-center gap-8'>
+                                                    <p className='text-stone-800 font-medium text-[16px]'>Account Name:</p>
+                                                    <p className='text-stone-800 font-medium text-[16px]'>{app_settings?.accountName?.toUpperCase() || app_settings?.user_name}</p>
+                                                </div>
+
+                                                <div className='w-full flex justify-between items-center gap-8'>
+                                                    <p className='text-stone-800 font-medium text-[16px]'>Account IFSC:</p>
+                                                    <p className='text-stone-800 font-medium text-[16px]'>{app_settings?.receipt_account_ifsc?.toUpperCase()}</p>
+                                                </div>
+
+                                                <div className='w-full flex justify-between items-center gap-8'>
+                                                    <p className='text-stone-800 font-medium text-[16px]'>Account Number:</p>
+                                                    <p className='text-stone-800 font-medium text-[16px]'>{app_settings?.receipt_account_number}</p>
+                                                </div>
+
+                                            </div>
+
                                         </div>
-                                        <div className="text-center text-[15px] text-gray-500">
-                                            {app_settings.receipt_time
-                                                ||
-                                                isValidDate(app_settings.repayment_time) ?
-                                                generateReceiptTime(app_settings.repayment_time)
-                                                :
-                                                ""
-                                            }
-                                        </div>
+
                                     </div>
 
-                                    <div className='px-4 pb-14'>
-
-
-                                        <div className=''>
-                                            <p className='text-gray-500 text-[16px]'>Amount:</p>
-                                            <p className='text-[18px] text-stone-800 font-medium'>INR {app_settings?.receipt_loan_amount || (Number(app_settings?.loan_amount) * 0.6) || "00"}.00</p>
-                                        </div>
-
-
-                                        <div className='pt-4'>
-                                            <p className='text-gray-500 text-[16px]'>Sent by:</p>
-                                            <p className='text-stone-800 font-medium text-[16px] capitalize'>{app_settings.lenders || app_settings.app_name || ""}</p>
-
-                                            <div className='w-full flex justify-between items-center'>
-                                                <p className='text-stone-800 font-medium text-[16px]'>Order sn:</p>
-                                                <p className='text-stone-800 font-medium text-[16px]'>{app_settings?.receipt_serial_number || receipt_serial_number}</p>
-                                            </div>
-                                        </div>
-
-
-                                        <div className='pt-4'>
-                                            <p className='text-gray-500 text-[16px]'>Received by:</p>
-
-                                            <div className='w-full flex justify-between items-center gap-8'>
-                                                <p className='text-stone-800 font-medium text-[16px]'>Account Name:</p>
-                                                <p className='text-stone-800 font-medium text-[16px]'>{app_settings?.accountName?.toUpperCase() || app_settings?.user_name}</p>
-                                            </div>
-
-                                            <div className='w-full flex justify-between items-center gap-8'>
-                                                <p className='text-stone-800 font-medium text-[16px]'>Account IFSC:</p>
-                                                <p className='text-stone-800 font-medium text-[16px]'>{app_settings?.ifsc?.toUpperCase()}</p>
-                                            </div>
-
-                                            <div className='w-full flex justify-between items-center gap-8'>
-                                                <p className='text-stone-800 font-medium text-[16px]'>Account Number:</p>
-                                                <p className='text-stone-800 font-medium text-[16px]'>{app_settings?.accountNumber}</p>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
+                                    <button
+                                        onClick={handleDownload}
+                                        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded mb-12"
+                                    >
+                                        Download Receipt
+                                    </button>
                                 </div>
-
-                                <button
-                                    onClick={handleDownload}
-                                    className="mt-4 bg-blue-600 text-white px-4 py-2 rounded mb-12"
-                                >
-                                    Download Receipt
-                                </button>
-                            </div>
-                        </AccordionDetails>
-                    </Accordion>
+                            </AccordionDetails>
+                        </Accordion>
+                    }
 
                 </div>
             </div>

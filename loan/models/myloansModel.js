@@ -24,7 +24,10 @@ const myloansSchema = new Schema(
         customer_id: {
             type: String
         },
-        
+        is_receipt_uploaded: {
+            type: Boolean,
+            default: false,
+        },
         receipt_time: {
             type: String
         },
